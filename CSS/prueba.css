@@ -1,0 +1,114 @@
+/* Estilo general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contenedor del formulario */
+.containerf {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.form-container {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    animation: fadeIn 1s ease-out;
+}
+
+.form-title {
+    font-size: 2rem;
+    color: #343a40;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Estilo de las etiquetas */
+.form-label {
+    font-size: 1.1rem;
+    color: #495057;
+    margin-bottom: 10px;
+    display: block;
+    font-weight: 600;
+}
+
+/* Campos de texto */
+.form-control {
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    background-color: #f8f9fa;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Estilo de los botones */
+.btn-submit {
+    width: 100%;
+    padding: 15px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+/* Estilo de la casilla de verificación */
+.form-check-label {
+    font-size: 1rem;
+    color: #495057;
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+/* Animación de aparición */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-out;
+}

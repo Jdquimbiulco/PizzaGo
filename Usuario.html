@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Inventario - Clientes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="./CSS/estiloprincipal.css">
+    <style>
+        .action-card {
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        .action-card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <h2 class="loading-text">Cargando Sistema...</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-lg-2 sidebar bg-dark text-white p-3">
+        <h4 class="text-center mb-4">Inventario</h4>
+        <a href="#dashboard" class="nav-link active text-white"> 
+            <i class="fas fa-chart-line"></i> Panel de control 
+        </a>
+        <a href="./Usuario.html" class="nav-link text-white"> 
+            <i class="fas fa-user"></i> Usuarios 
+        </a>
+        <a href="./producto.html" class="nav-link text-white"> 
+            <i class="fas fa-box"></i> Productos 
+        </a>
+        <a href="./venta.html" class="nav-link text-white"> 
+            <i class="fas fa-shopping-cart"></i> Ventas 
+        </a>
+        <a href="./pedidos.html" class="nav-link text-white"> 
+            <i class="fas fa-list"></i> Pedidos
+        </a>
+    </div>
+
+    <div class="content">
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Usuarios</h5>
+                            <h3 id="usuarios-count">0</h3>
+                        </div>
+                        <i class="fa fa-user card-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Pedidos</h5>
+                                        <h3 id="pedidos-count">0</h3>
+                        </div>
+                        <i class="fa fa-list card-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Productos</h5>
+                            <h3 id="productos-count">0</h3>
+                        </div>
+                        <i class="fa fa-box card-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-danger text-white">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Ventas</h5>
+                            <h3 id="ventas-count">0</h3>
+                        </div>
+                        <i class="fa fa-shopping-cart card-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="clientes" class="container">
+            <div class="header text-center mb-4">
+                <h2>Gestión de Clientes</h2>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="card action-card text-center" id="add-client">
+                        <div class="card-body">
+                            <i class="fas fa-user-plus fa-3x mb-3"></i>
+                            <h5 class="card-title">Agregar Cliente</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card action-card text-center" id="edit-client">
+                        <div class="card-body">
+                            <i class="fas fa-user-edit fa-3x mb-3"></i>
+                            <h5 class="card-title">Modificar Cliente</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card action-card text-center" id="delete-client">
+                        <div class="card-body">
+                            <i class="fas fa-user-minus fa-3x mb-3"></i>
+                            <h5 class="card-title">Eliminar Cliente</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario para agregar/modificar/eliminar cliente -->
+            <div id="form-container" class="mt-4" style="display: none;">
+                <h2 id="form-title"></h2>
+                <form id="client-form">
+                    <div class="mb-3" id="client-id-container" style="display: none;">
+                        <label for="clienteId" class="form-label">ID del Cliente</label>
+                        <input type="text" class="form-control" id="clienteId" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombreCliente" class="form-label">Nombre del Cliente</label>
+                        <input type="text" class="form-control" id="nombreCliente" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefonoCliente" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="telefonoCliente" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="emailCliente" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="emailCliente" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="direccionCliente" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="direccionCliente" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rolCliente" class="form-label">Rol</label>
+                        <select class="form-control" id="rolCliente" required>
+                            <option value="">Seleccione un rol</option>
+                            <option value="admin">Administrador</option>
+                            <option value="cliente">Cliente</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contrasenaCliente" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="contrasenaCliente" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+    </div>
+    
+            <!-- Bloque para mostrar usuarios -->
+            <div id="lista-clientes" class="container mt-5">
+                <div class="header text-center mb-4">
+                    <h2>Lista de Usuarios</h2>
+                </div>
+                <button id="actualizar-lista" class="btn btn-primary mb-3">Actualizar Lista</button>
+                <input type="text" id="buscar-usuario" class="form-control mb-3" placeholder="Buscar usuario por nombre...">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>Rol</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-usuarios">
+                        <!-- Aquí se insertarán los usuarios dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="./JS/panel.js"></script>
+    <script>
+        // Función para filtrar usuarios en la tabla según el texto ingresado
+document.getElementById('buscar-usuario').addEventListener('keyup', function() {
+    const textoBusqueda = this.value.toLowerCase();
+    const filas = document.querySelectorAll('#tabla-usuarios tr');
+
+    filas.forEach(fila => {
+        const nombreUsuario = fila.children[1].textContent.toLowerCase(); // Segundo td es el nombre
+        if (nombreUsuario.includes(textoBusqueda)) {
+            fila.style.display = '';
+        } else {
+            fila.style.display = 'none';
+        }
+    });
+});
+
+
+document.getElementById('actualizar-lista').addEventListener('click', function() {
+            fetch('http://127.0.0.1:5000/get-usuarios')
+            .then(response => response.json())
+            .then(data => {
+                const tabla = document.getElementById('tabla-usuarios');
+                tabla.innerHTML = ''; // Limpiar tabla antes de actualizar
+                
+                data.forEach(usuario => {
+                    console.log(usuario._id);
+                    const fila = `<tr>
+                        <td>${usuario._id}</td>
+                        <td>${usuario.nombre}</td>
+                        <td>${usuario.correo}</td>
+                        <td>${usuario.telefono}</td>
+                        <td>${usuario.direccion}</td>
+                        <td>${usuario.rol}</td>
+                    </tr>`;
+                    tabla.innerHTML += fila;
+                });
+            })
+            .catch(error => console.error('Error al obtener usuarios:', error));
+        });
+
+
+
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const action = this.id; // 'add-client', 'edit-client', 'delete-client'
+                let formTitle = "";
+                document.getElementById('client-id-container').style.display = 'none';
+                document.getElementById('form-container').style.display = 'block';
+                document.getElementById('client-form').setAttribute('data-action', action);
+
+
+                let labels = Array.from(document.getElementsByTagName('label'));
+                        labels.forEach(label =>label.style.display = 'block');
+                        document.getElementById('nombreCliente').style.display = 'block';
+                         document.getElementById('telefonoCliente').style.display = 'block';
+                        document.getElementById('emailCliente').style.display = 'block';
+                        document.getElementById('direccionCliente').style.display = 'block';
+                        document.getElementById('rolCliente').style.display = 'block';
+                        document.getElementById('contrasenaCliente').style.display = 'block';
+
+
+
+                // Cambiar título y mostrar el campo ID si es necesario
+                switch (action) {
+                    case "add-client":
+                        formTitle = "Agregar Cliente";
+                        break;
+                    case "edit-client":
+                        formTitle = "Modificar Cliente";
+                        document.getElementById('client-id-container').style.display = 'block'; // Mostrar campo ID
+                        break;
+                    case "delete-client":
+                        formTitle = "Eliminar Cliente";
+                        document.getElementById('client-id-container').style.display = 'block'; // Mostrar campo ID
+                        let labels = Array.from(document.getElementsByTagName('label'));
+                        labels.forEach(label => {
+                         if (label.innerHTML === 'ID del Cliente') {
+                         label.style.display = 'block';
+                        } else {
+                      label.style.display = 'none';
+                        }
+                        });
+                        document.getElementById('nombreCliente').style.display = 'none';
+                         document.getElementById('telefonoCliente').style.display = 'none';
+                        document.getElementById('emailCliente').style.display = 'none';
+                        document.getElementById('direccionCliente').style.display = 'none';
+                        document.getElementById('rolCliente').style.display = 'none';
+                        document.getElementById('contrasenaCliente').style.display = 'none';
+                        break;
+                }
+
+                document.getElementById('form-title').textContent = formTitle;
+            });
+        });
+
+        document.getElementById('client-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const clienteId = document.getElementById('clienteId').value;
+            const nombre = document.getElementById('nombreCliente').value;
+            const telefono = document.getElementById('telefonoCliente').value;
+            const email = document.getElementById('emailCliente').value;
+            const direccion = document.getElementById('direccionCliente').value;
+            const rol = document.getElementById('rolCliente').value;
+            const contrasena = document.getElementById('contrasenaCliente').value;
+
+            if (!nombre || !telefono || !email || !direccion || !rol || !contrasena) {
+                alert("Por favor, complete todos los campos.");
+                return;
+            }
+
+            let url = 'http://127.0.0.1:5000/agregar-usuario';  // Default: Add client
+            let method = 'POST';  // Default: POST method
+            let data = {nombre, correo: email, telefono, direccion, rol, contraseña: contrasena};
+
+            if (clienteId) {
+                // Si estamos modificando un cliente
+                if (document.getElementById('form-title').textContent === "Modificar Cliente") {
+                    url = 'http://127.0.0.1:5000/modificar-usuario';
+                    method = 'PUT';
+                    data.id = clienteId;  // Añadir ID para la modificación
+                }
+                // Si estamos eliminando un cliente
+                else if (document.getElementById('form-title').textContent === "Eliminar Cliente") {
+                    url = 'http://127.0.0.1:5000/eliminar-usuario';
+                    method = 'DELETE';
+                    data.id = clienteId;  // Añadir ID para la eliminación
+                }
+            }
+
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                document.getElementById('form-container').style.display = 'none';
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

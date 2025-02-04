@@ -1,0 +1,169 @@
+/* Estilo general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fa;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(90deg, #A61717, #D91E1E);
+    color: #FFF;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Barra lateral */
+.sidebar {
+    height: 100vh;
+    background-color: #343a40;
+    color: #fff;
+    position: fixed;
+    width: 250px;
+    padding-top: 20px;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .nav-link {
+    color: #adb5bd;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+    font-size: 1.3rem;
+}
+
+.sidebar .nav-link.active {
+    background-color: #495057;
+    color: #fff;
+    font-weight: bold;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #495057;
+}
+
+/* Contenido principal */
+.content {
+    margin-left: 250px;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Diseño de la carta de formulario */
+.card {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin-top: 40px;
+    animation: fadeIn 1s ease-out;
+}
+
+.card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
+
+/* Botón de envío */
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Mensajes de éxito */
+.alert {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-out;
+}
+
+/* Estilo de carga */
+/* Estilos para la pantalla de carga */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden; /* Establecer inicialmente invisible */
+    opacity: 0; /* Transparente inicialmente */
+    transition: opacity 0.3s, visibility 0.3s; /* Transiciones suaves */
+}
+
+.loading-content {
+    text-align: center;
+    color: white;
+}
+
+.loading-text {
+    margin-top: 20px;
+}

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido - Sistema de Inventario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./CSS/estiloprincipal.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Barra lateral -->
+            <div class="col-md-3 col-lg-2 sidebar bg-dark text-white p-3">
+                <h4 class="text-center mb-4">Inventario</h4>
+                <a href="#dashboard" class="nav-link active text-white"> 
+                    <i class="fas fa-chart-line"></i> Panel de control 
+                </a>
+                <a href="./Usuario.html" class="nav-link text-white"> 
+                    <i class="fas fa-user"></i> Usuarios 
+                </a>
+                <a href="./producto.html" class="nav-link text-white"> 
+                    <i class="fas fa-box"></i> Productos 
+                </a>
+                <a href="./venta.html" class="nav-link text-white"> 
+                    <i class="fas fa-shopping-cart"></i> Ventas 
+                </a>
+                <a href="./pedidos.html" class="nav-link text-white"> 
+                    <i class="fas fa-list"></i> Pedidos
+                </a>
+            </div>
+
+            <!-- Contenido principal -->
+            <div class="col-md-9 col-lg-10 content p-4">
+                <!-- Panel de tarjetas -->
+                <div id="dashboard" class="container-fluid">
+                    <div class="row mb-4">
+                        <!-- Tarjetas del panel -->
+                        <div class="col-md-3 mb-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Usuarios</h5>
+                                        <h3 id="usuarios-count">0</h3>
+                                    </div>
+                                    <i class="fa fa-user card-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Pedidos</h5>
+                                        <h3 id="pedidos-count">0</h3>
+                                    </div>
+                                    <i class="fa fa-list card-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Productos</h5>
+                                        <h3 id="productos-count">0</h3>
+                                    </div>
+                                    <i class="fa fa-box card-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card bg-danger text-white">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Ventas</h5>
+                                        <h3 id="ventas-count">0</h3>
+                                    </div>
+                                    <i class="fa fa-shopping-cart card-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestión de pedidos -->
+                <div id="pedidos" class="container">
+                    <div class="header text-center mb-4">
+                        <h2>Gestión de Pedidos</h2>
+                    </div>
+                    <div class="row justify-content-center">
+                        <!-- Tarjetas de acciones -->
+                        <div class="col-md-4 mb-3">
+                            <div class="card action-card text-center" id="add-pedido">
+                                <div class="card-body">
+                                    <i class="fas fa-plus-circle fa-3x mb-3"></i>
+                                    <h5 class="card-title">Agregar Pedido</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card action-card text-center" id="edit-pedido">
+                                <div class="card-body">
+                                    <i class="fas fa-edit fa-3x mb-3"></i>
+                                    <h5 class="card-title">Modificar Pedido</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card action-card text-center" id="delete-pedido">
+                                <div class="card-body">
+                                    <i class="fas fa-minus-circle fa-3x mb-3"></i>
+                                    <h5 class="card-title">Eliminar Pedido</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulario para agregar, modificar o eliminar pedidos -->
+                    <div id="form-container" class="mt-4" style="display: none;">
+                        <h2 id="form-title" class="text-center mb-4"></h2>
+                        <form id="pedido-form">
+                            <div class="mb-3" id="pedido-id-container" style="display: none;">
+                                <label for="pedidoId" class="form-label">ID del Pedido</label>
+                                <input type="text" class="form-control" id="pedidoId" readonly placeholder="ID del Pedido">
+                            </div>
+                            <div class="mb-3" id="cliente-container">
+                                <label for="cliente" class="form-label">Cliente</label>
+                                <input type="text" id="cliente" class="form-control" placeholder="Cliente del pedido" required>
+                            </div>
+                            <div class="mb-3" id="producto-container">
+                                <label for="producto" class="form-label">Producto</label>
+                                <input type="text" id="producto" class="form-control" placeholder="Nombre del producto" required>
+                            </div>
+                            <div class="mb-3" id="cantidad-container">
+                                <label for="cantidad" class="form-label">Cantidad</label>
+                                <input type="number" id="cantidad" class="form-control" placeholder="Cantidad de productos" required>
+                            </div>
+                            <!-- Nuevo campo para Total -->
+                            <div class="mb-3" id="total-container">
+                                <label for="total" class="form-label">Total</label>
+                                <input type="number" id="total" class="form-control" placeholder="Total del pedido" required>
+                            </div>
+                            <!-- Nuevo campo para Método de Pago -->
+                            <div class="mb-3" id="metodo-pago-container">
+                                <label for="metodo_pago" class="form-label">Método de Pago</label>
+                                <select id="metodo_pago" class="form-control" required>
+                                    <option value="Efectivo">Efectivo</option>
+                                    <option value="Tarjeta">Tarjeta</option>
+                                    <option value="Transferencia">Transferencia</option>
+                                </select>
+                            </div>
+                            <!-- Nuevo campo para Estado -->
+                            <div class="mb-3" id="estado-container">
+                                <label for="estado" class="form-label">Estado</label>
+                                <select id="estado" class="form-control" required>
+                                    <option value="Pendiente">Pendiente</option>
+                                    <option value="Completado">Completado</option>
+                                    <option value="Cancelado">Cancelado</option>
+                                </select>
+                            </div>
+                            <!-- Nuevo campo para Dirección de Entrega -->
+                            <div class="mb-3" id="direccion-container">
+                                <label for="direccion_entrega" class="form-label">Dirección de Entrega</label>
+                                <input type="text" id="direccion_entrega" class="form-control" placeholder="Dirección de entrega" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Guardar</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="lista-pedidos" class="container mt-5">
+                    <div class="header text-center mb-4">
+                        <h2>Lista de Pedidos</h2>
+                    </div>
+                    <button id="actualizar-pedidos" class="btn btn-primary mb-3">Actualizar Lista</button>
+                    <input type="text" id="buscar-pedido" class="form-control mb-3" placeholder="Buscar pedido por ID o nombre...">
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID Pedido</th>
+                                <th>Usuario</th>
+                                <th>Productos</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Dirección</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-pedidos">
+                            <!-- Aquí se insertarán los pedidos dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+        </div>
+ 
+    
+    <script>
+        // Función para filtrar pedidos en la tabla según el texto ingresado
+        document.getElementById('buscar-pedido').addEventListener('keyup', function() {
+            const textoBusqueda = this.value.toLowerCase();
+            const filas = document.querySelectorAll('#tabla-pedidos tr');
+    
+            filas.forEach(fila => {
+                const idPedido = fila.children[0].textContent.toLowerCase(); // Primer td es el ID de pedido
+                const nombreUsuario = fila.children[1].textContent.toLowerCase(); // Segundo td es el nombre de usuario
+                if (idPedido.includes(textoBusqueda) || nombreUsuario.includes(textoBusqueda)) {
+                    fila.style.display = '';
+                } else {
+                    fila.style.display = 'none';
+                }
+            });
+        });
+    
+        document.getElementById('actualizar-pedidos').addEventListener('click', function() {
+            fetch('http://127.0.0.1:5000/get-pedidos') // Cambia la URL a la que obtienes los pedidos
+                .then(response => response.json())
+                .then(data => {
+                    const tabla = document.getElementById('tabla-pedidos');
+                    tabla.innerHTML = ''; // Limpiar tabla antes de actualizar
+                    
+                    data.forEach(pedido => {
+                        // Construir los productos del pedido
+                        const productos = pedido.productos.map(producto => `${producto.nombre} (x${producto.cantidad})`).join(', ');
+                        
+                        // Crear fila para cada pedido
+                        const fila = `<tr>
+                            <td>${pedido._id}</td>
+                            <td>${pedido.usuario_id}</td>
+                            <td>${productos}</td>
+                            <td>${pedido.total}</td>
+                            <td>${pedido.estado}</td>
+                            <td>${pedido.direccion_entrega}</td>
+                            <td>${new Date(pedido.fecha_pedido).toLocaleString()}</td>
+                        </tr>`;
+                        tabla.innerHTML += fila;
+                    });
+                })
+                .catch(error => console.error('Error al obtener pedidos:', error));
+        });
+        // Mostrar el formulario con la acción correcta
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const action = this.id; // Acción seleccionada: 'add-pedido', 'edit-pedido', 'delete-pedido'
+                let formTitle = "";
+                
+                document.getElementById('pedido-id-container').style.display = 'none'; // Ocultar ID por defecto
+                document.getElementById('cliente-container').style.display = 'block'; // Mostrar los campos por defecto
+                document.getElementById('producto-container').style.display = 'block';
+                document.getElementById('cantidad-container').style.display = 'block';
+                document.getElementById('total-container').style.display = 'block'; // Mostrar total
+                document.getElementById('metodo-pago-container').style.display = 'block'; // Mostrar método de pago
+                document.getElementById('estado-container').style.display = 'block'; // Mostrar estado
+                document.getElementById('direccion-container').style.display = 'block'; // Mostrar dirección de entrega
+                
+                document.getElementById('form-container').style.display = 'block';
+                document.getElementById('pedido-form').setAttribute('data-action', action);
+                
+                // Cambiar el título del formulario y los campos visibles según la acción
+                switch (action) {
+                    case "add-pedido":
+                        formTitle = "Agregar Pedido";
+                        break;
+                    case "edit-pedido":
+                        formTitle = "Modificar Pedido";
+                        document.getElementById('pedido-id-container').style.display = 'block'; // Mostrar el campo de ID
+                        break;
+                    case "delete-pedido":
+                        formTitle = "Eliminar Pedido";
+                        document.getElementById('pedido-id-container').style.display = 'block'; // Mostrar solo el campo de ID
+                        // Ocultar los demás campos
+                        document.getElementById('cliente-container').style.display = 'none';
+                        document.getElementById('producto-container').style.display = 'none';
+                        document.getElementById('cantidad-container').style.display = 'none';
+                        document.getElementById('total-container').style.display = 'none'; 
+                        document.getElementById('metodo-pago-container').style.display = 'none'; 
+                        document.getElementById('estado-container').style.display = 'none'; 
+                        document.getElementById('direccion-container').style.display = 'none'; 
+                        break;
+                }
+
+                document.getElementById('form-title').textContent = formTitle;
+            });
+        });
+
+        // Función para manejar el envío del formulario (agregar, modificar o eliminar pedido)
+        document.getElementById('pedido-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar el comportamiento por defecto del formulario
+
+            const pedidoId = document.getElementById('pedidoId').value; // ID del pedido
+            const cliente = document.getElementById('cliente').value;
+            const producto = document.getElementById('producto').value;
+            const cantidad = document.getElementById('cantidad').value;
+            const total = document.getElementById('total').value;
+            const metodo_pago = document.getElementById('metodo_pago').value;
+            const estado = document.getElementById('estado').value;
+            const direccion_entrega = document.getElementById('direccion_entrega').value;
+
+            // Verificar que los campos necesarios no estén vacíos
+            if (!cliente || !producto || !cantidad || !total || !metodo_pago || !estado || !direccion_entrega) {
+                alert("Por favor, complete todos los campos.");
+                return;
+            }
+
+            let url = 'http://127.0.0.1:5000/realizar-pedido'; // URL por defecto para agregar
+            let method = 'POST'; // Método por defecto
+            let data = { 
+                usuario_id: cliente, // Enviar cliente como usuario_id, asumiendo que se refiere al ID del usuario
+                productos: [{ nombre: producto, cantidad: cantidad }], 
+                total: total, // Total recibido del formulario
+                metodo_pago: metodo_pago, // Método de pago recibido del formulario
+                estado: estado, // Estado recibido del formulario
+                direccion_entrega: direccion_entrega, // Dirección de entrega recibida del formulario
+                fecha_pedido: new Date().toISOString() // Fecha actual
+            }; 
+
+            // Si hay un pedidoId, estamos en el modo de modificación o eliminación
+            if (pedidoId) {
+                // Si estamos modificando
+                if (document.getElementById('form-title').textContent === "Modificar Pedido") {
+                    url = `http://127.0.0.1:5000/modificar-pedido/${pedidoId}`;
+                    method = 'PUT';
+                    data = { 
+                        productos: [{ nombre: producto, cantidad: cantidad }],
+                        total: total, 
+                        metodo_pago: metodo_pago,
+                        estado: estado,
+                        direccion_entrega: direccion_entrega
+                    };
+                }
+                // Si estamos eliminando
+                else if (document.getElementById('form-title').textContent === "Eliminar Pedido") {
+                    url = `http://127.0.0.1:5000/eliminar-pedido/${pedidoId}`;
+                    method = 'DELETE';
+                }
+            }
+
+            // Enviar la solicitud correspondiente al backend
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                // Si la operación fue exitosa, puedes ocultar el formulario
+                document.getElementById('form-container').style.display = 'none';
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+    <script src="./JS/panel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

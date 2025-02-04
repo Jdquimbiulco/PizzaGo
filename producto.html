@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto - Sistema de Inventario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./CSS/estiloprincipal.css">
+</head>
+<body>
+
+    <!-- Pantalla de carga -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <h2 class="loading-text">Cargando Sistema...</h2>
+        </div>
+    </div>
+
+    <!-- Barra de navegación -->
+    <div class="col-md-3 col-lg-2 sidebar bg-dark text-white p-3">
+        <h4 class="text-center mb-4">Inventario</h4>
+        <a href="#dashboard" class="nav-link active text-white"> 
+            <i class="fas fa-chart-line"></i> Panel de control 
+        </a>
+        <a href="./Usuario.html" class="nav-link text-white"> 
+            <i class="fas fa-user"></i> Usuarios 
+        </a>
+        <a href="./producto.html" class="nav-link text-white"> 
+            <i class="fas fa-box"></i> Productos 
+        </a>
+        <a href="./venta.html" class="nav-link text-white"> 
+            <i class="fas fa-shopping-cart"></i> Ventas 
+        </a>
+        <a href="./pedidos.html" class="nav-link text-white"> 
+            <i class="fas fa-list"></i> Pedidos
+        </a>
+    </div>  
+
+    <!-- Contenido principal -->
+    <div class="content">
+        <div id="dashboard" class="container-fluid">
+            <div class="row mb-4">
+                <!-- Tarjetas del panel -->
+                <div class="col-md-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title">Usuarios</h5>
+                                <h3 id="usuarios-count">0</h3>
+                            </div>
+                            <i class="fa fa-user card-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title">Pedidos</h5>
+                                <h3 id="pedidos-count">0</h3>
+                            </div>
+                            <i class="fa fa-list card-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title">Productos</h5>
+                                <h3 id="productos-count">0</h3>
+                            </div>
+                            <i class="fa fa-box card-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-danger text-white">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title">Ventas</h5>
+                                <h3 id="ventas-count">0</h3>
+                            </div>
+                            <i class="fa fa-shopping-cart card-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestión de productos -->
+        <div id="productos" class="container">
+            <div class="header text-center mb-4">
+                <h2>Gestión de Productos</h2>
+            </div>
+            <div class="row justify-content-center">
+                <!-- Tarjetas de acciones -->
+                <div class="col-md-4">
+                    <div class="card action-card text-center" id="add-product">
+                        <div class="card-body">
+                            <i class="fas fa-plus-circle fa-3x mb-3"></i>
+                            <h5 class="card-title">Agregar Producto</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card action-card text-center" id="edit-product">
+                        <div class="card-body">
+                            <i class="fas fa-edit fa-3x mb-3"></i>
+                            <h5 class="card-title">Modificar Producto</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card action-card text-center" id="delete-product">
+                        <div class="card-body">
+                            <i class="fas fa-minus-circle fa-3x mb-3"></i>
+                            <h5 class="card-title">Eliminar Producto</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario para agregar, modificar o eliminar productos -->
+            <div id="form-container" class="mt-4" style="display: none;">
+                <h2 id="form-title"></h2>
+                <form id="product-form">
+                    <div class="mb-3" id="product-id-container" style="display: none;">
+                        <label for="productId" class="form-label">ID del Producto</label>
+                        <input type="text" class="form-control" id="productId" readonly placeholder="ID del Producto">
+                    </div>
+                    <div class="mb-3" id="nombre-container">
+                        <label for="nombre" class="form-label">Nombre del Producto</label>
+                        <input type="text" id="nombre" class="form-control" placeholder="Nombre del producto" required>
+                    </div>
+                    <div class="mb-3" id="descripcion-container">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <input type="text" id="descripcion" class="form-control" placeholder="Descripción del producto" required>
+                    </div>
+                    <div class="mb-3" id="tipo-container">
+                        <label for="tipo" class="form-label">Tipo</label>
+                        <select id="tipo" class="form-select" required>
+                            <option value="pizza">Pizza</option>
+                            <option value="bebida">Bebida</option>
+                            <option value="extra">Extra</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="precio-container">
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="number" id="precio" step="0.01" class="form-control" placeholder="Precio del producto" required>
+                    </div>
+                    <div class="mb-3" id="imagen-url-container">
+                        <label for="imagen_url" class="form-label">Imagen URL</label>
+                        <input type="text" id="imagen_url" class="form-control" placeholder="URL de la imagen del producto" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Guardar</button>
+                </form>
+            </div>
+        </div>
+        <div id="lista-productos" class="container mt-5">
+            <div class="header text-center mb-4">
+                <h2>Lista de Productos</h2>
+            </div>
+            <button id="actualizar-lista" class="btn btn-primary mb-3">Actualizar Lista</button>
+            <input type="text" id="buscar-producto" class="form-control mb-3" placeholder="Buscar producto por nombre...">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Tipo</th>
+                        <th>Precio</th>
+                        <th>Imagen</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-productos">
+                    <!-- Aquí se insertarán los productos dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+       
+    <script>
+        // Función para filtrar productos en la tabla según el texto ingresado
+        document.getElementById('buscar-producto').addEventListener('keyup', function() {
+            const textoBusqueda = this.value.toLowerCase();
+            const filas = document.querySelectorAll('#tabla-productos tr');
+    
+            filas.forEach(fila => {
+                const nombreProducto = fila.children[1].textContent.toLowerCase(); // Segundo td es el nombre
+                if (nombreProducto.includes(textoBusqueda)) {
+                    fila.style.display = '';
+                } else {
+                    fila.style.display = 'none';
+                }
+            });
+        });
+    
+        document.getElementById('actualizar-lista').addEventListener('click', function() {
+            fetch('http://127.0.0.1:5000/get-productos')
+            .then(response => response.json())
+            .then(data => {
+                const tabla = document.getElementById('tabla-productos');
+                tabla.innerHTML = ''; // Limpiar tabla antes de actualizar
+                
+                data.forEach(producto => {
+                    const fila = `<tr>
+                        <td>${producto._id}</td>
+                        <td>${producto.nombre}</td>
+                        <td>${producto.descripcion}</td>
+                        <td>${producto.tipo}</td>
+                        <td>$${producto.precio}</td>
+                        <td><img src="${producto.imagen_url}" alt="Imagen del producto" width="50"></td>
+                    </tr>`;
+                    tabla.innerHTML += fila;
+                });
+            })
+            .catch(error => console.error('Error al obtener productos:', error));
+        });
+    
+        // Mostrar el formulario con la acción correcta
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const action = this.id; // Acción seleccionada: 'add-product', 'edit-product', 'delete-product'
+                let formTitle = "";
+                
+                document.getElementById('product-id-container').style.display = 'none'; // Ocultar ID por defecto
+                document.getElementById('nombre-container').style.display = 'block'; // Mostrar los campos por defecto
+                document.getElementById('descripcion-container').style.display = 'block';
+                document.getElementById('tipo-container').style.display = 'block';
+                document.getElementById('precio-container').style.display = 'block';
+                document.getElementById('imagen-url-container').style.display = 'block';
+                
+                document.getElementById('form-container').style.display = 'block';
+                document.getElementById('product-form').setAttribute('data-action', action);
+                
+                // Cambiar el título del formulario y los campos visibles según la acción
+                switch (action) {
+                    case "add-product":
+                        formTitle = "Agregar Producto";
+                        break;
+                    case "edit-product":
+                        formTitle = "Modificar Producto";
+                        document.getElementById('product-id-container').style.display = 'block'; // Mostrar el campo de ID
+                        break;
+                    case "delete-product":
+                        formTitle = "Eliminar Producto";
+                        document.getElementById('product-id-container').style.display = 'block'; // Mostrar solo el campo de ID
+                        // Ocultar los demás campos
+                        document.getElementById('nombre-container').style.display = 'none';
+                        document.getElementById('descripcion-container').style.display = 'none';
+                        document.getElementById('tipo-container').style.display = 'none';
+                        document.getElementById('precio-container').style.display = 'none';
+                        document.getElementById('imagen-url-container').style.display = 'none';
+                        break;
+                }
+
+                document.getElementById('form-title').textContent = formTitle;
+            });
+        });
+
+        // Función para manejar el envío del formulario (agregar, modificar o eliminar producto)
+        document.getElementById('product-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar el comportamiento por defecto del formulario
+
+            const productId = document.getElementById('productId').value; // ID del producto
+            const nombre = document.getElementById('nombre').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const tipo = document.getElementById('tipo').value;
+            const precio = document.getElementById('precio').value;
+            const imagen_url = document.getElementById('imagen_url').value;
+
+            // Verificar que los campos necesarios no estén vacíos
+            if (!nombre || !descripcion || !tipo || !precio || !imagen_url) {
+                alert("Por favor, complete todos los campos.");
+                return;
+            }
+
+            let url = 'http://127.0.0.1:5000/agregar-producto'; // URL por defecto para agregar
+            let method = 'POST'; // Método por defecto
+            let data = { nombre, descripcion, tipo, precio, imagen_url }; // Datos por defecto
+
+            // Si hay un productId, estamos en el modo de modificación o eliminación
+            if (productId) {
+                // Si estamos modificando
+                if (document.getElementById('form-title').textContent === "Modificar Producto") {
+                    url = 'http://127.0.0.1:5000/modificar-producto';
+                    method = 'PUT';
+                    data.id = productId; // Añadir el ID para la modificación
+                }
+                // Si estamos eliminando
+                else if (document.getElementById('form-title').textContent === "Eliminar Producto") {
+                    url = 'http://127.0.0.1:5000/eliminar-producto';
+                    method = 'DELETE';
+                    data.id = productId; // Añadir el ID para la eliminación
+                }
+            }
+
+            // Enviar la solicitud correspondiente al backend
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                // Si la operación fue exitosa, puedes ocultar el formulario
+                document.getElementById('form-container').style.display = 'none';
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        // Ocultar pantalla de carga al cargar el contenido
+        window.onload = function() {
+            document.getElementById('loading-screen').style.display = 'none'; // Ocultar la pantalla de carga
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="./JS/panel.js"></script>
+</body>
+</html>
