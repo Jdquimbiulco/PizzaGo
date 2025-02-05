@@ -6,7 +6,6 @@ from bson import ObjectId
 
 app = Flask(__name__)
 CORS(app)
-
 # Conexión a MongoDB
 mongo_uri = "mongodb+srv://pobando:patricio7@cluster0.f3tc9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 try:
@@ -14,7 +13,7 @@ try:
     db = client['Pizzeria']  # Nombre de la base de datos
     usuarios_collection = db['usuarios']
     productos_collection = db['productos']
-    carritos_collection = db['carritos']
+    carritos_collection = db['carrito']
     pedidos_collection = db['pedidos']
     pagos_collection = db['ventas']
     print("Conexión exitosa a MongoDB!")
@@ -23,7 +22,12 @@ except Exception as e:
     exit()
 
 # ---------------------- Rutas para Usuarios ----------------------
-
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
 # Agregar un usuario (puede ser administrador o cliente)
 @app.route('/agregar-usuario', methods=['POST'])
 def agregar_usuario():
@@ -109,7 +113,6 @@ def agregar_producto():
         "descripcion": data['descripcion'],
         "tipo": data['tipo'],
         "precio": data['precio'],
-        "opciones": {},  # Esta campo puede tener una lista de opciones
         "imagen_url": data['imagen_url']
     }
     productos_collection.insert_one(producto)
@@ -142,7 +145,6 @@ def modificar_producto():
             "descripcion": data['descripcion'],
             "tipo": data['tipo'],
             "precio": data['precio'],
-            "opciones": data['opciones'],
             "imagen_url": data['imagen_url']
         }}
     )
@@ -163,6 +165,154 @@ def eliminar_producto():
     productos_collection.delete_one({"_id": ObjectId(producto_id)})
     return jsonify({'message': 'Producto eliminado exitosamente'}), 200
 
+
+
+# Obtener todos los pedidos
+@app.route('/get-pedidos', methods=['GET'])
+def get_pedidos():
+    pedidos = list(pedidos_collection.find())
+    for pedido in pedidos:
+        pedido['_id'] = str(pedido['_id'])
+        pedido['usuario_id'] = str(pedido['usuario_id'])
+    return jsonify(pedidos)
+
+# Obtener todas las ventas
+@app.route('/get-ventas', methods=['GET'])
+def get_ventas():
+    ventas = list(pedidos_collection.find())
+    for venta in ventas:
+        venta['_id'] = str(venta['_id'])  # Convertir ObjectId a string para JSON
+        venta['usuario_id'] = str(venta['usuario_id'])  # Convertir ObjectId a string
+        venta['fecha_pedido'] = venta['fecha_pedido'].isoformat()  # Convertir fecha a formato legible
+    return jsonify(ventas)
+
+# ---------------------- Rutas para Carrito ----------------------
+
+@app.route('/agregar-al-carrito', methods=['POST'])
+def agregar_al_carrito():
+    data = request.get_json()
+    usuario_id = data.get('usuario_id')
+    producto_id = data.get('producto_id')
+    cantidad = data.get('cantidad')
+    opciones = data.get('opciones', {})  # Opciones adicionales del producto
+
+    if not all([usuario_id, producto_id, cantidad]):
+        return jsonify({'message': 'Faltan datos necesarios'}), 400
+    
+    # Buscar el producto en la base de datos
+    producto = productos_collection.find_one({"_id": ObjectId(producto_id)})
+    if not producto:
+        return jsonify({'message': 'Producto no encontrado'}), 404
+    
+    nombre = producto['nombre']
+    precio_unitario = float(producto['precio'])  # Convertir a float
+
+    # Obtener el costo adicional de las opciones
+    costo_opciones = float(opciones.get("total", 0))  # Convertir a float
+    
+    # Calcular el subtotal incluyendo el costo de las opciones
+    subtotal = float(cantidad) * (precio_unitario + costo_opciones)  # Convertir a float
+
+    # Verificar si el usuario ya tiene un carrito
+    carrito = carritos_collection.find_one({"usuario_id": ObjectId(usuario_id)})
+    
+    if carrito:
+        # Verificar si el producto ya está en el carrito con las mismas opciones
+        for producto in carrito['productos']:
+            if producto['producto_id'] == ObjectId(producto_id) and producto.get('opciones') == opciones:
+                producto['cantidad'] += int(cantidad)  # Convertir a int
+                producto['subtotal'] += float(subtotal)  # Convertir a float
+                carritos_collection.update_one(
+                    {"_id": carrito['_id']},
+                    {"$set": {"productos": carrito['productos'], "total": float(carrito['total']) + subtotal}}
+                )
+                return jsonify({'message': 'Producto actualizado en el carrito'}), 200
+        
+        # Si el producto no estaba en el carrito, lo añadimos
+        carritos_collection.update_one(
+            {"_id": carrito['_id']},
+            {"$push": {"productos": {
+                "producto_id": ObjectId(producto_id),
+                "nombre": nombre,
+                "cantidad": int(cantidad),  # Convertir a int
+                "precio_unitario": precio_unitario,
+                "subtotal": subtotal,  # Ya es float
+                "opciones": opciones  # Guardar opciones seleccionadas
+            }}, "$set": {"total": float(carrito['total']) + subtotal}}  # Convertir a float
+        )
+    else:
+        # Crear un nuevo carrito
+        nuevo_carrito = {
+            "usuario_id": ObjectId(usuario_id),
+            "productos": [{
+                "producto_id": ObjectId(producto_id),
+                "nombre": nombre,
+                "cantidad": int(cantidad),  # Convertir a int
+                "precio_unitario": precio_unitario,
+                "subtotal": subtotal,  # Ya es float
+                "opciones": opciones  # Guardar opciones seleccionadas
+            }],
+            "total": subtotal  # Ya es float
+        }
+        carritos_collection.insert_one(nuevo_carrito)
+    
+    return jsonify({'message': 'Producto agregado al carrito'}), 201
+# Eliminar producto del carrito
+@app.route('/eliminar-del-carrito', methods=['DELETE'])
+def eliminar_del_carrito():
+    data = request.get_json()
+    usuario_id = data.get('usuario_id')
+    producto_id = data.get('producto_id')
+    
+    if not all([usuario_id, producto_id]):
+        return jsonify({'message': 'Faltan datos necesarios'}), 400
+    
+    carrito = carritos_collection.find_one({"usuario_id": ObjectId(usuario_id)})
+    if not carrito:
+        return jsonify({'message': 'Carrito no encontrado'}), 404
+    
+    productos_actualizados = [p for p in carrito['productos'] if p['producto_id'] != ObjectId(producto_id)]
+    nuevo_total = sum(p['subtotal'] for p in productos_actualizados)
+    
+    carritos_collection.update_one(
+        {"_id": carrito['_id']},
+        {"$set": {"productos": productos_actualizados, "total": nuevo_total}}
+    )
+    
+    return jsonify({'message': 'Producto eliminado del carrito'}), 200
+
+@app.route("/carrito/<usuario_id>", methods=["GET"])
+def obtener_carrito(usuario_id):
+    try:
+        # Verificar si `usuario_id` es un ObjectId válido
+        if not ObjectId.is_valid(usuario_id):
+            return jsonify({"error": "ID de usuario no válido"}), 400
+
+        # Buscar el carrito del usuario en la base de datos
+        carrito = carritos_collection.find_one({"usuario_id": ObjectId(usuario_id)})
+
+        # Si el usuario no tiene carrito, devolver estructura vacía
+        if not carrito:
+            return jsonify({"productos": []}), 200
+
+        # Convertir `_id` y `producto_id` a cadenas para evitar errores en JSON
+        carrito["_id"] = str(carrito["_id"])
+        carrito["usuario_id"] = str(carrito["usuario_id"])
+        for producto in carrito.get("productos", []):
+            producto["producto_id"] = str(producto["producto_id"])
+
+        return jsonify(carrito), 200
+
+    except Exception as e:
+        return jsonify({"error": f"Error al obtener el carrito: {str(e)}"}), 500
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
+
+
+"""
 # ---------------------- Rutas para Pedidos ----------------------
 
 # Crear un pedido con productos identificados por nombre
@@ -304,26 +454,4 @@ def eliminar_pedido(id_pedido):
 
     pedidos_collection.delete_one({"_id": pedido_id})
     return jsonify({'message': 'Pedido eliminado exitosamente'}), 200
-
-# Obtener todos los pedidos
-@app.route('/get-pedidos', methods=['GET'])
-def get_pedidos():
-    pedidos = list(pedidos_collection.find())
-    for pedido in pedidos:
-        pedido['_id'] = str(pedido['_id'])
-        pedido['usuario_id'] = str(pedido['usuario_id'])
-    return jsonify(pedidos)
-
-# Obtener todas las ventas
-@app.route('/get-ventas', methods=['GET'])
-def get_ventas():
-    ventas = list(pedidos_collection.find())
-    for venta in ventas:
-        venta['_id'] = str(venta['_id'])  # Convertir ObjectId a string para JSON
-        venta['usuario_id'] = str(venta['usuario_id'])  # Convertir ObjectId a string
-        venta['fecha_pedido'] = venta['fecha_pedido'].isoformat()  # Convertir fecha a formato legible
-    return jsonify(ventas)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+"""

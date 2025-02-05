@@ -374,7 +374,7 @@
                                         <div class="rating">
                                             ${mostrarRating(producto.rating)}  <!-- Si tienes un sistema de rating, lo puedes mostrar aquí -->
                                         </div>
-                                        <button onclick="agregarAlCarrito('${producto._id}')">Agregar al carrito</button>
+                                        <button onclick="infoProductos('${producto._id}')">Ver detalles</button>
                                     </div>
                                     <div class="detalles-adicionales">
                                         <p><strong>Tipo:</strong> ${producto.tipo || 'No disponible'}</p>  <!-- Cambié 'Categoria' por 'Tipo' -->
@@ -407,37 +407,22 @@
             return estrellas;
         }
 
-        // Función para agregar producto al carrito
-        /*
-        async function agregarAlCarrito(productId) {
-            const cliente = JSON.parse(localStorage.getItem('cliente'));
-            if (!cliente) {
-                alert("Debes estar logueado para agregar productos al carrito");
-                return;
-            }
+        async function infoProductos(productId) {
+    const response = await fetch('http://localhost:5000/get-productos');
+    const productos = await response.json();
+    console.log(productos);
+    producto=productos.find(producto => producto._id === productId);
+    localStorage.setItem('producto', JSON.stringify(producto));
+    const cliente = JSON.parse(localStorage.getItem('usuario'));
+    if (!cliente) {
+        alert("Debes estar logueado para agregar productos al carrito");
+        return;
+    }
+    window.location.href = "infoProductos.html"; 
 
-            const clienteId = cliente._id;
 
-            const response = await fetch('http://localhost:5000/carrito/agregar', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    cliente_id: clienteId,
-                    producto_id: parseInt(productId),
-                }),
-            });
+}
 
-            const data = await response.json();
-
-            if (response.ok) {
-                alert("Producto agregado al carrito");
-            } else {
-                alert(data.error || "Ocurrió un error al agregar el producto al carrito");
-            }
-        }
-            */
         function cerrarSesion() {
             localStorage.removeItem('usuario');
             location.reload();

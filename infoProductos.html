@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Producto - Pizzería</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-logo h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-logo i {
+            margin-right: 10px;
+        }
+
+        /* Login Container */
+        .login-container {
+            position: relative;
+        }
+
+        .login-button {
+            cursor: pointer;
+            padding: 8px 16px;
+            background-color: #28a745;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-button:hover {
+            background-color: #218838;
+        }
+
+        .login-dropdown {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 200px;
+        }
+
+        .login-dropdown input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .login-dropdown button {
+            width: 100%;
+            padding: 8px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-dropdown button:hover {
+            background-color: #218838;
+        }
+
+        .create-account {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .create-account a {
+            color: #28a745;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .create-account a:hover {
+            color: #218838;
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Image Section */
+        .image-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-section img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Details Section */
+        .details-section {
+            flex: 2;
+            padding: 20px;
+        }
+
+        .details-section h1 {
+            margin-top: 0;
+            font-size: 32px;
+            color: #343a40;
+        }
+
+        .store a {
+            color: #28a745;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .store a:hover {
+            color: #218838;
+        }
+
+        .rating {
+            margin: 10px 0;
+            font-size: 18px;
+            color: #ffc107;
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .discount {
+            color: #28a745;
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #888;
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        #productDescription {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Pizza Customization Form */
+        .pizza-form {
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .pizza-form h2 {
+            text-align: center;
+            color: #343a40;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .pizza-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .pizza-form select, .pizza-form input[type="checkbox"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .pizza-form select:focus, .pizza-form input[type="checkbox"]:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+
+        .pizza-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pizza-form button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-logo">
+            <h1><i class="fas fa-shopping-cart"></i> Detalles Producto </h1>
+        </div>
+        <div id="login-container" class="login-container">
+            <div class="login-button" onclick="toggleLogin()">Iniciar sesión</div>
+            <div class="login-dropdown">
+                <input type="text" id="correo" placeholder="Correo" />
+                <input type="password" id="contraseña" placeholder="Contraseña" />
+                <button onclick="iniciarSesion()">Acceder</button>
+                <p class="create-account">
+                    <a href="login.html">Crear cuenta</a>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Image Section -->
+        <div class="image-section">
+            <img src="https://cdn.britannica.com/08/177308-050-94D9D6BE/Food-Pizza-Basil-Tomato.jpg" alt="Pizza Pepperoni" id="productImage" class="main-image">
+        </div>
+
+        <!-- Details Section -->
+        <div class="details-section">
+            <h1 id="productTitle"></h1>
+            <p class="store">Visita la tienda de <a href="#" id="productStore">Pizzería Deliciosa</a></p>
+            <div class="rating">
+                <span id="productRating">4.5</span>
+                <span id="productStars">★★★★☆</span>
+                <span id="productReviews"></span>
+            </div>
+            <p class="price">
+                <span class="current-price" id="productPrice"></span>
+            </p>
+            <p id="productDescription">Deliciosa Pizza Pepperoni con ingredientes frescos y sabrosos.</p>
+
+            <!-- Pizza Customization Form -->
+            <div class="pizza-form">
+                <h2>Personaliza tu Pizza</h2>
+                <form id="pizzaForm" onsubmit="calcularTotal(event)">
+                    <label for="masa">Tipo de Masa:</label>
+                    <select id="masa" name="masa">
+                        <option value="normal">Normal</option>
+                        <option value="integral">Integral</option>
+                    </select>
+
+                    <label for="tamaño">Tamaño:</label>
+                    <select id="tamaño" name="tamaño">
+                        <option value="pequeña">Pequeña</option>
+                        <option value="mediana">Mediana</option>
+                        <option value="grande">Grande</option>
+                    </select>
+
+                    <label>Ingredientes Extra:</label>
+                    <label><input type="checkbox" name="ingredientes_extra" value="queso"> Queso (+$1)</label>
+                    <label><input type="checkbox" name="ingredientes_extra" value="champiñones"> Champiñones (+$1)</label>
+                    <label><input type="checkbox" name="ingredientes_extra" value="pepperoni"> Pepperoni (+$1)</label>
+
+                    <p><strong>Total: <span id="totalPrice">$2.50</span></strong></p>
+                    <button type="submit">Ordenar Pizza</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+const pizza = JSON.parse(localStorage.getItem('producto'));
+console.log(pizza);
+
+// Mostrar los datos de la pizza en la página
+document.getElementById("productImage").src = pizza.imagen_url.toString();
+document.getElementById("productTitle").textContent = pizza.nombre;
+document.getElementById("productDescription").textContent = pizza.descripcion;
+document.getElementById("productPrice").textContent = `$${pizza.precio}`;
+
+        // Función para calcular el total
+        function calcularTotal(event) {
+    event.preventDefault(); // Evitar que el formulario se envíe
+
+    // Obtener los valores seleccionados
+    const masa = document.getElementById("masa").value;
+    const tamaño = document.getElementById("tamaño").value;
+    const ingredientesExtra = document.querySelectorAll('input[name="ingredientes_extra"]:checked');
+
+    // Calcular el precio base
+    let total = parseFloat(pizza.precio);
+
+    // Ajustar el precio según la masa
+    if (masa === "integral") {
+        total += 2; // Aumentar $2 por masa integral
+    }
+
+    // Ajustar el precio según el tamaño
+    if (tamaño === "pequeña") {
+        total /= 2; // Dividir el precio por 2 para tamaño pequeño
+    } else if (tamaño === "grande") {
+        total *= 2; // Duplicar el precio para tamaño grande
+    }
+
+    // Añadir $1 por cada ingrediente extra
+    ingredientesExtra.forEach(ingrediente => {
+        total += 1;
+    });
+
+    // Mostrar el total en la página
+    document.getElementById("totalPrice").textContent = `$${total.toFixed(2)}`;
+
+    // Enviar los datos al backend
+    const opciones = {
+        masa: masa,
+        tamaño: tamaño,
+        ingredientes_extra: Array.from(ingredientesExtra).map(ing => ing.value),
+        total: total // Enviar como número, no como cadena de texto
+    };
+
+    enviarAlBackend(opciones);
+}
+
+// Función para enviar los datos al backend
+async function enviarAlBackend(opciones) {
+    const cliente = JSON.parse(localStorage.getItem('usuario'));
+    const producto = JSON.parse(localStorage.getItem('producto'));
+
+    if (!cliente) {
+        alert("Debes estar logueado para agregar productos al carrito");
+        return;
+    }
+
+    const clienteId = cliente._id;
+    const productoId = producto._id; // Obtener el ID del producto desde localStorage
+
+    try {
+        const response = await fetch('http://localhost:5000/agregar-al-carrito', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                usuario_id: clienteId,
+                producto_id: productoId, // Usar el ID del producto
+                cantidad: 1, // Cantidad fija (puedes cambiarla si es necesario)
+                opciones: opciones // Enviar las opciones personalizadas
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("Producto agregado al carrito");
+        } else {
+            alert(data.message || "Ocurrió un error al agregar el producto al carrito");
+        }
+    } catch (error) {
+        console.error("Error en la petición:", error);
+        alert("No se pudo conectar con el servidor");
+    }
+} 
+    </script>
+</body>
+</html>
