@@ -117,10 +117,10 @@
                 <div class="col-md-5">
                     <div class="card text-center">
                         <div class="card-body">
-                            <h5 class="card-title">Buscar Venta por Usuario</h5>
+                            <h5 class="card-title">Buscar Venta por Pedido</h5>
                             <form id="buscar-venta-form">
                                 <div class="mb-3">
-                                    <label for="id_usuario" class="form-label">ID del Usuario</label>
+                                    <label for="id_usuario" class="form-label">ID del Pedido</label>
                                     <input type="text" class="form-control" id="id_usuario" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Buscar Venta</button>
@@ -137,10 +137,10 @@
                 <div class="col-md-5">
                     <div class="card text-center">
                         <div class="card-body">
-                            <h5 class="card-title">Eliminar Venta por Usuario</h5>
+                            <h5 class="card-title">Eliminar Venta por Perdido</h5>
                             <form id="eliminar-venta-form">
                                 <div class="mb-3">
-                                    <label for="id_usuario_eliminar" class="form-label">ID del Usuario</label>
+                                    <label for="id_usuario_eliminar" class="form-label">ID del Pedido</label>
                                     <input type="text" class="form-control" id="id_usuario_eliminar" required>
                                 </div>
                                 <button type="submit" class="btn btn-danger">Eliminar Venta</button>
@@ -162,10 +162,18 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.venta) {
-                        document.getElementById('venta-details').textContent = `Venta realizada con el usuario ID ${idUsuario}: Producto ${data.venta.producto}, Cantidad ${data.venta.cantidad}`;
-                        document.getElementById('venta-result').style.display = 'block';
+                        document.getElementById('venta-details').innerHTML = `<p>
+    Venta realizada con el usuario ID ${idUsuario}:<br>
+    Pedido ID: ${data.venta.pedido_id}<br>
+    Método de pago: ${data.venta.metodo_pago}<br>
+    Estado: ${data.venta.estado}<br>
+    Fecha de pago: ${new Date(data.venta.fecha_pago).toLocaleString()}</p>
+`;
+
+// Hacer visible el resultado
+document.getElementById('venta-result').style.display = 'block';
                     } else {
-                        alert('No se encontró venta para este usuario.');
+                        alert('No se encontró venta para este pedido.');
                     }
                 })
                 .catch(error => console.error('Error:', error));

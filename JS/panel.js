@@ -52,12 +52,13 @@ async function obtenerDatosPedidos() {
 
 document.addEventListener("DOMContentLoaded", () => {
     obtenerDatosPedidos().then(data => {
+        console.log(data);
         document.getElementById('pedidos-count').textContent = data.length.toString();
     });
 });
 
 
-async function obtenerDatosPedidos() {
+async function obtenerDatosVentas() {
     try {
         const response = await fetch('http://localhost:5000/get-ventas'); 
         if (!response.ok) {
@@ -71,7 +72,7 @@ async function obtenerDatosPedidos() {
 }       
 
 document.addEventListener("DOMContentLoaded", () => {
-    obtenerDatosPedidos().then(data => {
+    obtenerDatosVentas().then(data => {
         document.getElementById('ventas-count').textContent = data.length.toString();
     });
 });

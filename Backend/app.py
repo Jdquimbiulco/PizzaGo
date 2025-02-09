@@ -1,8 +1,11 @@
+from datetime import datetime
+from email import parser
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from pymongo import MongoClient
 import pandas as pd
 from bson import ObjectId
+from dateutil import parser
 
 app = Flask(__name__)
 CORS(app)
@@ -14,7 +17,7 @@ try:
     usuarios_collection = db['usuarios']
     productos_collection = db['productos']
     carritos_collection = db['carrito']
-    pedidos_collection = db['pedidos']
+    pedidos_collection = db['Pedidos']
     pagos_collection = db['ventas']
     print("Conexión exitosa a MongoDB!")
 except Exception as e:
@@ -168,23 +171,36 @@ def eliminar_producto():
 
 
 # Obtener todos los pedidos
+# Obtener todos los pedidos
 @app.route('/get-pedidos', methods=['GET'])
 def get_pedidos():
+    # Obtener todos los pedidos de la colección
     pedidos = list(pedidos_collection.find())
+
+    # Convertir ObjectId a str y formatear la fecha
     for pedido in pedidos:
-        pedido['_id'] = str(pedido['_id'])
-        pedido['usuario_id'] = str(pedido['usuario_id'])
+        pedido['_id'] = str(pedido['_id'])  # Convertir ObjectId a str
+        pedido['usuario_id'] = str(pedido['usuario_id'])  # Convertir ObjectId a str
+        pedido['fecha_pedido'] = pedido['fecha_pedido'].isoformat()  # Convertir fecha a formato ISO
+
+        # Si hay más campos ObjectId, convertirlos también
+        if 'productos' in pedido:
+            for producto in pedido['productos']:
+                if 'producto_id' in producto and isinstance(producto['producto_id'], ObjectId):
+                    producto['producto_id'] = str(producto['producto_id'])
+
     return jsonify(pedidos)
 
-# Obtener todas las ventas
+# Obtener todas las ventas (pagos)
 @app.route('/get-ventas', methods=['GET'])
 def get_ventas():
-    ventas = list(pedidos_collection.find())
+    ventas = list(pagos_collection.find())  # Cambiar a la colección de pagos para obtener las ventas
     for venta in ventas:
         venta['_id'] = str(venta['_id'])  # Convertir ObjectId a string para JSON
-        venta['usuario_id'] = str(venta['usuario_id'])  # Convertir ObjectId a string
-        venta['fecha_pedido'] = venta['fecha_pedido'].isoformat()  # Convertir fecha a formato legible
+        venta['pedido_id'] = str(venta['pedido_id'])  # Convertir ObjectId a string
+        venta['fecha_pago'] = venta['fecha_pago'].isoformat()  # Convertir fecha de pago a formato ISO
     return jsonify(ventas)
+
 
 # ---------------------- Rutas para Carrito ----------------------
 
@@ -306,7 +322,265 @@ def obtener_carrito(usuario_id):
     except Exception as e:
         return jsonify({"error": f"Error al obtener el carrito: {str(e)}"}), 500
 
+@app.route('/agregar-pedido', methods=['POST'])
+def agregar_pedido():
+    data = request.get_json()
 
+    # Verificar si se reciben los campos necesarios
+    required_fields = ["usuario_id", "productos", "total", "metodo_pago", "estado", "fecha_pedido"]
+    if not all(k in data for k in required_fields):
+        return jsonify({'message': 'Faltan datos necesarios'}), 400
+
+    # Verificar que el método de pago sea válido
+    if data['metodo_pago'] not in ["tarjeta", "paypal", "contra entrega"]:
+        return jsonify({'message': 'Método de pago no válido'}), 400
+
+
+    datos_pago = data.get("Datos_pago")
+  # No se necesitan datos adicionales para pago contra entrega
+
+    # Convertir la fecha ISO a datetime (usando dateutil.parser)
+    fecha_pedido = parser.isoparse(data['fecha_pedido'])
+
+    # Crear el objeto de pedido
+    pedido = {
+        "usuario_id": ObjectId(data['usuario_id']),
+        "productos": [{
+            "producto_id": ObjectId(producto['producto_id']),
+            "nombre": producto['nombre'],
+            "cantidad": producto['cantidad'],
+            "subtotal": producto['subtotal']
+        } for producto in data['productos']],
+        "total": float(data['total']),
+        "metodo_pago": data['metodo_pago'],
+        "Datos_pago": datos_pago,
+        "estado": data['estado'],  # "pendiente", "en envío", "entregado"
+        "direccion_entrega": data.get('direccion_entrega', ''),  # Dirección es opcional
+        "fecha_pedido": fecha_pedido  # Usar la fecha convertida
+    }
+
+    # Insertar el pedido en la colección de pedidos
+    pedido_id = pedidos_collection.insert_one(pedido).inserted_id
+
+    # Crear el objeto de pago
+    pago = {
+        "pedido_id": pedido_id,
+        "metodo_pago": data['metodo_pago'],
+        "estado": "aprobado",  # "pendiente", "aprobado", "rechazado"
+        "fecha_pago": datetime.utcnow()  # Fecha actual en UTC
+    }
+
+    # Insertar el pago en la colección de pagos
+    pago_id = pagos_collection.insert_one(pago).inserted_id
+
+    # Eliminar los productos y el total del carrito
+    carritos_collection.update_one(
+        {"usuario_id": ObjectId(data['usuario_id'])},
+        {"$set": {"productos": [], "total": 0}}
+    )
+
+    return jsonify({
+        'message': 'Pedido y pago agregados exitosamente',
+        'pago': {
+            '_id': str(pago_id),
+            'pedido_id': str(pedido_id),
+            'metodo_pago': pago['metodo_pago'],
+            'estado': pago['estado'],
+            'fecha_pago': pago['fecha_pago'].isoformat()
+        }
+    }), 201
+
+# Crear un pedido con productos identificados por nombre
+@app.route('/realizar-pedido', methods=['POST'])
+def realizar_pedido():
+    try:
+        data = request.get_json()
+
+        # Validar campos obligatorios
+        required_fields = ["usuario_id", "productos", "total", "metodo_pago", "estado", "direccion_entrega"]
+        if not all(k in data for k in required_fields):
+            return jsonify({'message': 'Faltan datos necesarios', 'missing_fields': [k for k in required_fields if k not in data]}), 400
+
+        # Reemplazar los nombres de productos con sus detalles completos
+        productos_completos = []
+        for producto_nombre in data['productos']:
+            producto = productos_collection.find_one({"nombre": producto_nombre})
+            if not producto:
+                return jsonify({'message': f'Producto {producto_nombre} no encontrado en el inventario'}), 404
+            productos_completos.append({
+                "nombre": producto['nombre'],
+                "descripcion": producto['descripcion'],
+                "precio": producto['precio'],
+                "tipo": producto['tipo'],
+                "imagen_url": producto['imagen_url']
+            })
+
+        # Crear el objeto de pedido
+        pedido = {
+            "usuario_id": ObjectId(data['usuario_id']),
+            "productos": productos_completos,
+            "total": float(data['total']),
+            "metodo_pago": data['metodo_pago'],
+            "estado": data['estado'],
+            "direccion_entrega": data['direccion_entrega'],
+            "fecha_pedido": datetime.utcnow()  # Usar datetime.utcnow() para la fecha actual
+        }
+
+        # Insertar el pedido en la colección
+        pedidos_collection.insert_one(pedido)
+        return jsonify({'message': 'Pedido registrado exitosamente'}), 201
+
+    except Exception as e:
+        return jsonify({'message': f'Error al realizar el pedido: {str(e)}'}), 500
+
+# Modificar un pedido existente con productos identificados por nombre
+@app.route('/modificar-pedido/<string:id_pedido>', methods=['PUT'])
+def modificar_pedido(id_pedido):
+    try:
+        # Validar ID del pedido
+        try:
+            pedido_id = ObjectId(id_pedido)
+        except Exception as e:
+            return jsonify({'message': 'ID de pedido inválido'}), 400
+
+        # Buscar el pedido existente
+        pedido = pedidos_collection.find_one({"_id": pedido_id})
+        if not pedido:
+            return jsonify({'message': 'Pedido no encontrado'}), 404
+
+        # Obtener los nuevos datos del pedido
+        data = request.get_json()
+
+        # Modificar los productos por su nombre (si se proporcionan)
+        updated_data = {}
+        if 'productos' in data:
+            productos_completos = []
+            for producto_nombre in data['productos']:
+                producto = productos_collection.find_one({"nombre": producto_nombre})
+                if not producto:
+                    return jsonify({'message': f'Producto {producto_nombre} no encontrado en el inventario'}), 404
+                productos_completos.append({
+                    "nombre": producto['nombre'],
+                    "descripcion": producto['descripcion'],
+                    "precio": producto['precio'],
+                    "tipo": producto['tipo'],
+                    "imagen_url": producto['imagen_url']
+                })
+            updated_data["productos"] = productos_completos
+
+        # Actualizar otros campos si se proporcionan
+        if 'total' in data:
+            updated_data["total"] = float(data['total'])
+        if 'metodo_pago' in data:
+            updated_data["metodo_pago"] = data['metodo_pago']
+        if 'estado' in data:
+            updated_data["estado"] = data['estado']
+        if 'direccion_entrega' in data:
+            updated_data["direccion_entrega"] = data['direccion_entrega']
+
+        # Actualizar el pedido
+        pedidos_collection.update_one({"_id": pedido_id}, {"$set": updated_data})
+        return jsonify({'message': 'Pedido modificado exitosamente'}), 200
+
+    except Exception as e:
+        return jsonify({'message': f'Error al modificar el pedido: {str(e)}'}), 500
+
+# Buscar venta por ID de usuario
+@app.route('/buscar-venta/<string:id_pedido>', methods=['GET'])
+def buscar_venta(id_pedido):
+    try:
+        # Validar ID del pedido
+        try:
+            pedido_id = ObjectId(id_pedido)
+        except Exception as e:
+            return jsonify({'message': 'ID de pedido inválido'}), 400
+
+        # Buscar la venta relacionada con el pedido
+        venta = pagos_collection.find_one({"pedido_id": pedido_id})
+        if not venta:
+            return jsonify({'message': 'No se encontró la venta para este pedido'}), 404
+
+        # Convertir valores ObjectId a string y formatear fecha
+        venta['_id'] = str(venta['_id'])
+        venta['pedido_id'] = str(venta['pedido_id'])
+        venta['fecha_pago'] = venta['fecha_pago'].isoformat()
+
+        return jsonify({'venta': venta}), 200
+
+    except Exception as e:
+        return jsonify({'message': f'Error al buscar la venta: {str(e)}'}), 500
+
+@app.route('/eliminar-venta/<string:id_pedido>', methods=['DELETE'])
+def eliminar_venta(id_pedido):
+    try:
+        # Validar ID del pedido
+        try:
+            pedido_id = ObjectId(id_pedido)
+        except Exception as e:
+            return jsonify({'message': 'ID de pedido inválido'}), 400
+
+        # Eliminar la venta relacionada con el pedido
+        result = pagos_collection.delete_one({"pedido_id": pedido_id})
+        if result.deleted_count == 0:
+            return jsonify({'message': 'Venta no encontrada para este pedido'}), 404
+
+        return jsonify({'message': 'Venta eliminada exitosamente'}), 200
+
+    except Exception as e:
+        return jsonify({'message': f'Error al eliminar la venta: {str(e)}'}), 500
+
+# Eliminar un pedido por ID
+@app.route('/eliminar-pedido/<string:id_pedido>', methods=['DELETE'])
+def eliminar_pedido(id_pedido):
+    try:
+        # Validar ID del pedido
+        try:
+            pedido_id = ObjectId(id_pedido)
+        except Exception as e:
+            return jsonify({'message': 'ID de pedido inválido'}), 400
+
+        # Eliminar el pedido
+        result = pedidos_collection.delete_one({"_id": pedido_id})
+        if result.deleted_count == 0:
+            return jsonify({'message': 'Pedido no encontrado'}), 404
+
+        return jsonify({'message': 'Pedido eliminado exitosamente'}), 200
+
+    except Exception as e:
+        return jsonify({'message': f'Error al eliminar el pedido: {str(e)}'}), 500
+
+
+@app.route('/get-pedido/<pedidoId>', methods=['GET'])
+def get_pedido(pedidoId):
+    try:
+        try:
+            pedido_id = ObjectId(pedidoId)
+        except Exception as e:
+            return jsonify({'message': 'ID de pedido inválido'}), 400
+
+        # Eliminar el pedido
+        pedido = pedidos_collection.find_one({"_id": pedido_id})
+
+        # Si no se encuentra el pedido, devolver un error 404
+        if not pedido:
+            return jsonify({'error': 'Pedido no encontrado'}), 404
+
+        # Convertir el ObjectId a string y formatear la fecha
+        pedido['_id'] = str(pedido['_id'])
+        if 'productos' in pedido:
+            for producto in pedido['productos']:
+                if 'producto_id' in producto and isinstance(producto['producto_id'], ObjectId):
+                    producto['producto_id'] = str(producto['producto_id'])
+
+        pedido['usuario_id'] = str(pedido['usuario_id'])
+        pedido['fecha_pedido'] = pedido['fecha_pedido'].isoformat()
+
+        # Devolver el pedido en formato JSON
+        return jsonify(pedido), 200
+
+    except Exception as e:
+        # Manejar errores (por ejemplo, ID inválido)
+        return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
