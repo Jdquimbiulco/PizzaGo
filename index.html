@@ -8,16 +8,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
 </head>
 <body>
-      <!-- Menú lateral -->
-      <aside class="sidebar">
-       
+    <!-- Menú lateral -->
+    <aside class="sidebar">
         <ul class="sidebar-menu">
             <li class="index"><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
             <li><a href="./carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
             <li><a href="./pago.html"><i class="fas fa-credit-card"></i> Pago</a></li>
-            <li><a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a></li>
         </ul>
     </aside>
+
     <!-- Botón para abrir el menú -->
     <button class="open-btn" onclick="toggleSidebar()">
         <i class="fas fa-bars"></i>
@@ -58,97 +57,156 @@
     </footer>
 
     <script>
+        // Función para abrir/cerrar el menú lateral
         function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
-    sidebar.classList.toggle('active');
-    mainContent.classList.toggle('active');
-}
-        
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('active');
+        }
+
         // Función para cargar productos agrupados por categoría
         async function cargarProductos() {
-    try {
-        const response = await fetch('http://localhost:5000/get-productos');
-        if (!response.ok) throw new Error('Error al obtener productos');
-        const productos = await response.json();
-        const contenedor = document.getElementById("contenedor-productos");
-    
-        // Agrupar productos por tipo
-        const productosPorTipo = productos.reduce((acc, producto) => {
-            const tipo = producto.tipo || 'Sin tipo';  // Usamos 'tipo' en lugar de 'categoria'
-            if (!acc[tipo]) acc[tipo] = [];
-            acc[tipo].push(producto);
-            return acc;
-        }, {});
-    
-        contenedor.innerHTML = '';
-    
-        // Crear secciones por tipo
-        for (const tipo in productosPorTipo) {
-            const tipoHTML = `
-                <div class="tipo">
-                    <h2>${tipo.toUpperCase()}</h2>
-                    <div class="productos">
-                        ${productosPorTipo[tipo].map(producto => {
-                            return `
-                                <div class="producto">
-                                    <img src="${producto.imagen_url || 'https://via.placeholder.com/200'}" alt="${producto.nombre}">
-                                    <div>
-                                        <h3>${producto.nombre.toUpperCase()}</h3>
-                                        <p>Precio: $${producto.precio}</p>
-                                        <button onclick="infoProductos('${producto._id}')">Ver detalles</button>
-                                    </div>
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
-                </div>
-            `;
-            contenedor.innerHTML += tipoHTML;
-        }
-    } catch (error) {
-        console.error(error);
-    }
-    }
-    
-    
+            try {
+                const response = await fetch('http://localhost:5000/get-productos');
+                if (!response.ok) throw new Error('Error al obtener productos');
+                const productos = await response.json();
+                const contenedor = document.getElementById("contenedor-productos");
 
-    
+                // Guardar productos en localStorage para usarlos más tarde
+                localStorage.setItem('productos', JSON.stringify(productos));
+
+                // Agrupar productos por tipo
+                const productosPorTipo = productos.reduce((acc, producto) => {
+                    const tipo = producto.tipo || 'Sin tipo';
+                    if (!acc[tipo]) acc[tipo] = [];
+                    acc[tipo].push(producto);
+                    return acc;
+                }, {});
+
+                contenedor.innerHTML = '';
+
+                // Crear secciones por tipo
+                for (const tipo in productosPorTipo) {
+                    const tipoHTML = `
+                        <div class="tipo">
+                            <h2>${tipo.toUpperCase()}</h2>
+                            <div class="productos">
+                                ${productosPorTipo[tipo].map(producto => {
+                                    if (tipo === 'pizza') {
+                                        return `
+                                            <div class="producto">
+                                                <img src="${producto.imagen_url || 'https://via.placeholder.com/200'}" alt="${producto.nombre}">
+                                                <div>
+                                                    <h3>${producto.nombre.toUpperCase()}</h3>
+                                                    <p>Precio: $${producto.precio}</p>
+                                                    <button onclick="infoProductos('${producto._id}')">Ver detalles</button>
+                                                </div>
+                                            </div>
+                                        `;
+                                    } else {
+                                        return `
+                                            <div class="producto">
+                                                <img src="${producto.imagen_url || 'https://via.placeholder.com/200'}" alt="${producto.nombre}">
+                                                <div>
+                                                    <h3>${producto.nombre.toUpperCase()}</h3>
+                                                    <p>Precio: $${producto.precio}</p>
+                                                    <button onclick="enviarAlBackend('${producto._id}')">Añadir al carrito</button>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                    contenedor.innerHTML += tipoHTML;
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        // Función para enviar el producto al backend
+        async function enviarAlBackend(productoId) {
+            const cliente = JSON.parse(localStorage.getItem('usuario'));
+            const productos = JSON.parse(localStorage.getItem('productos'));
+            const producto = productos.find(p => p._id === productoId);
+
+            if (!cliente) {
+                alert("Debes estar logueado para agregar productos al carrito");
+                return;
+            }
+
+            const clienteId = cliente._id;
+
+            // Si el producto no es una pizza, se envía un arreglo vacío para ingredientes_extra
+            const opciones = {
+                ingredientes_extra: [] // Arreglo vacío para productos que no son pizza
+            };
+
+            try {
+                const response = await fetch('http://localhost:5000/agregar-al-carrito', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        usuario_id: clienteId,
+                        producto_id: productoId,
+                        cantidad: 1, // Cantidad fija
+                        opciones: opciones // Opciones vacías para productos que no son pizza
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("Producto agregado al carrito");
+                } else {
+                    alert(data.message || "Ocurrió un error al agregar el producto al carrito");
+                }
+            } catch (error) {
+                console.error("Error en la petición:", error);
+                alert("No se pudo conectar con el servidor");
+            }
+        }
+
+        // Función para redirigir a la página de detalles del producto
         async function infoProductos(productId) {
-    const response = await fetch('http://localhost:5000/get-productos');
-    const productos = await response.json();
-    console.log(productos);
-    producto=productos.find(producto => producto._id === productId);
-    localStorage.setItem('producto', JSON.stringify(producto));
-    const cliente = JSON.parse(localStorage.getItem('usuario'));
-    if (!cliente) {
-        alert("Debes estar logueado para agregar productos al carrito");
-        return;
-    }
-    window.location.href = "infoProductos.html"; 
-    
-    
-    }
-    
+            const response = await fetch('http://localhost:5000/get-productos');
+            const productos = await response.json();
+            const producto = productos.find(p => p._id === productId);
+            localStorage.setItem('producto', JSON.stringify(producto));
+
+            const cliente = JSON.parse(localStorage.getItem('usuario'));
+            if (!cliente) {
+                alert("Debes estar logueado para agregar productos al carrito");
+                return;
+            }
+
+            window.location.href = "infoProductos.html";
+        }
+
+        // Función para cerrar sesión
         function cerrarSesion() {
             localStorage.removeItem('usuario');
             location.reload();
         }
-    
-        window.onload = function() {
+
+        // Cargar productos al iniciar la página
+        window.onload = function () {
             const cliente = JSON.parse(localStorage.getItem('usuario'));
             if (cliente) {
-                document.getElementById('login-container').innerHTML = 
-                    `<span>Hola, ${cliente.nombre}</span>
-                    `;
+                document.getElementById('login-container').innerHTML =
+                    `<span>Hola, ${cliente.nombre}</span>`;
             }
-    
+
             cargarProductos();
         };
     </script>
 </body>
 </html>
-
 
 
 

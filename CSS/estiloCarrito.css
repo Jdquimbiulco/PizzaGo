@@ -54,9 +54,7 @@ body {
     color: #ffcc00; /* Amarillo al pasar el mouse */
 }
 
-.index {
-    margin-top: 50px;
-}
+
 
 /* Botón para abrir el menú */
 .open-btn {
@@ -208,7 +206,7 @@ main {
 }
 
 #checkout-btn {
-    background-color: #28a745;
+    background-color: #c82333;
     color: white;
     padding: 12px 24px;
     border: none;
@@ -223,7 +221,7 @@ main {
 }
 
 #checkout-btn:hover {
-    background-color: #218838;
+    background-color: #c82333;
     transform: translateY(-2px);
 }
 
