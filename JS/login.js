@@ -47,6 +47,70 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// REGISTRO DE NUEVO USUARIO
+ document.getElementById("registro-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const nombre = document.getElementById("nombre").value;
+    const correo = document.getElementById("correoRegistro").value;
+    const password = document.getElementById("passwordRegistro").value;
+    const telefono = document.getElementById("telefono").value;
+    const direccion = document.getElementById("direccion").value;
+
+    const nuevoUsuario = {
+        nombre,
+        correo,
+        contraseña: password,
+        telefono,
+        direccion,
+        rol: "cliente"
+    };
+
+    try {
+        const response = await fetch("http://localhost:5000/agregar-usuario", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(nuevoUsuario)
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+            alert(data.message || "Error al registrar usuario.");
+            return;
+        }
+
+        alert("Registro exitoso, ahora puedes iniciar sesión.");
+        document.getElementById("registro-form").reset();
+        document.getElementById("registroModal").querySelector(".btn-close").click();
+
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Error al conectar con el servidor.");
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*

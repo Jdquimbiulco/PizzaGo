@@ -134,23 +134,53 @@
     </div>
 
     <!-- Login Card -->
-    <div class="login-card">
-        <h3>Iniciar Sesión</h3>
-        <form id="login-form">
-            <div class="mb-3">
-                <input type="text" id="correo" class="form-control" placeholder="Correo" required>
+   <!-- Login Card -->
+<div class="login-card">
+    <h3>Iniciar Sesión</h3>
+    <form id="login-form">
+        <div class="mb-3">
+            <input type="text" id="correo" class="form-control" placeholder="Correo" required>
+        </div>
+        <div class="mb-3">
+            <input type="password" id="password" class="form-control" placeholder="Contraseña" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+    </form>
+    <div class="footer-link">
+        <p>¿No tienes cuenta? <a href="#" data-bs-toggle="modal" data-bs-target="#registroModal">Registrarse</a></p>
+    </div>
+</div>
+<!-- MODAL DE REGISTRO -->
+<div class="modal fade" id="registroModal" tabindex="-1" aria-labelledby="registroModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registroModalLabel">Registro de Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="mb-3">
-                <input type="password" id="password" class="form-control" placeholder="Contraseña" required>
+            <div class="modal-body">
+                <form id="registro-form">
+                    <div class="mb-3">
+                        <input type="text" id="nombre" class="form-control" placeholder="Nombre Completo" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" id="correoRegistro" class="form-control" placeholder="Correo Electrónico" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" id="passwordRegistro" class="form-control" placeholder="Contraseña" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="tel" id="telefono" class="form-control" placeholder="Teléfono" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" id="direccion" class="form-control" placeholder="Dirección" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Registrarse</button>
+                </form>
             </div>
-            <div class="mb-3">
-            </div>
-            <button type="submit" class="btn btn-primary">Ingresar</button>
-        </form>
-        <div class="footer-link">
-            <p>¿No tienes cuenta? <a href="#">Registrarse</a></p>
         </div>
     </div>
+</div>
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

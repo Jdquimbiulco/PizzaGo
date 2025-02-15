@@ -12,7 +12,7 @@ document.getElementById('generate-report').addEventListener('click', function() 
 
 // Obtener clientes y productos desde el backend
 window.addEventListener('DOMContentLoaded', function() {
-    fetch('http://127.0.0.1:5000/get-clientes')
+    fetch('http://127.0.0.1:7000/get-clientes')
         .then(response => response.json())
         .then(data => {
             const clienteSelect = document.getElementById('clienteVenta');

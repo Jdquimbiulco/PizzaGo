@@ -10,6 +10,20 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmfKoUFblU8UwAqyLhQPU_o1gixjtQoNE&libraries=places&callback=initMap" async defer></script>
 </head>
 <body>
+         <!-- Menú lateral -->
+         <aside class="sidebar">
+           
+            <ul class="sidebar-menu">
+                <li><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
+                <li><a href="./carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                <li><a href="./pago.html"><i class="fas fa-credit-card"></i> Pago</a></li>
+                <li><a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a></li>
+            </ul>
+        </aside>
+        <!-- Botón para abrir el menú -->
+        <button class="open-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
     <header class="header">
         <div class="header-logo">
             <h1><i class="fas fa-shopping-cart"></i> Confirmación de Envío</h1>
@@ -65,9 +79,25 @@
         </aside>
     </main>
     <footer>
-        <p>Derechos reservados &copy; 2025</p>
+        <div>
+            <a href="#">Términos y condiciones</a>
+            <a href="#">Política de privacidad</a>
+            <a href="#">Contacto</a>
+        </div>
+        <p>&copy; 2023 Tienda Online. Todos los derechos reservados.</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
     </footer>
     <script>
+    function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+    sidebar.classList.toggle('active');
+    mainContent.classList.toggle('active');
+}
         document.addEventListener("DOMContentLoaded", function () {
             const tipoEntrega = localStorage.getItem("tipoEntrega");
             if (tipoEntrega === "A domicilio") {

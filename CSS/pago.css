@@ -1,7 +1,7 @@
 /* Estilo general */
 body {
-    font-family: 'Open Sans', sans-serif;
-    background-color: #F2F2F2;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
     color: #333;
     margin: 0;
     padding: 0;
@@ -14,7 +14,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background: linear-gradient(90deg, #A61717, #D91E1E);
+    background: linear-gradient(90deg, #1a1a1a, #333);
     color: #FFF;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -29,9 +29,8 @@ body {
 }
 
 .header-logo i {
-    color: #FFD700;
+    color: #ff9900;
 }
-
 
 .header-nav ul {
     list-style: none;
@@ -53,7 +52,7 @@ body {
 }
 
 .header-nav a:hover {
-    color: #FFD700;
+    color: #ff9900;
     transform: scale(1.1);
 }
 
@@ -75,14 +74,16 @@ body {
 .flex-container {
     background-color: #FFF;
     border: 1px solid #DDD;
-    border-radius: 20px;
-    padding: 1rem;
+    border-radius: 10px;
+    padding: 1.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .flex-container h2 {
     margin-top: 0;
-    color: #D91E1E;
+    color: #1a1a1a;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 /* Resumen de la orden */
@@ -91,15 +92,17 @@ body {
     left: 102%;
     width: 320px;
     background-color: #FFF;
-    padding: 1rem;
+    padding: 1.5rem;
     border: 1px solid #DDD;
-    border-radius: 20px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .order-summary h2 {
     margin-top: 0;
-    color: #D91E1E;
+    color: #1a1a1a;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 .order-summary ul {
@@ -111,6 +114,8 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #555;
 }
 
 .order-summary h3 {
@@ -119,34 +124,36 @@ body {
     margin-top: 1rem;
     font-size: 1.2rem;
     font-weight: bold;
+    color: #1a1a1a;
 }
 
 /* Botones */
 .btn {
-    background-color: #D91E1E;
+    background-color: #ff9900;
     color: #FFF;
     border: none;
-    padding: 0.5rem;
+    padding: 0.75rem;
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
     text-align: center;
     width: 100%;
-    font-size: 0.9rem;
+    font-size: 1rem;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn:hover {
-    background-color: #A61717;
+    background-color: #e68a00;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Footer */
 footer {
-    background-color: #A61717;
+    background-color: #1a1a1a;
     color: #FFF;
     text-align: center;
     padding: 1rem;
+    margin-top: 2rem;
 }
 
 /* Responsivo */
@@ -162,24 +169,6 @@ footer {
     }
 }
 
-.btn, .header-logo h1 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-}
-
-h1, h2, h3 {
-    font-family: 'Playfair Display', serif;
-}
-
-input, select {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1rem;
-    padding: 0.5rem;
-    border: 1px solid #DDD;
-    border-radius: 5px;
-    width: 90%;
-}
-
 /* Login */
 .login-container {
     position: relative;
@@ -189,8 +178,8 @@ input, select {
 }
 
 .login-button {
-    background-color: #FFD700;
-    color: #A61717;
+    background-color: #ff9900;
+    color: #1a1a1a;
     padding: 10px 15px;
     font-size: 14px;
     font-weight: bold;
@@ -202,7 +191,7 @@ input, select {
 }
 
 .login-button:hover {
-    background-color: #ffffff;
+    background-color: #e68a00;
     transform: scale(1.05);
 }
 
@@ -217,12 +206,12 @@ input, select {
 #address-form label {
     font-weight: bold;
     font-size: 1rem;
-    color: #D91E1E;
+    color: #1a1a1a;
 }
 
 #address-form input,
 #address-form select {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     padding: 0.5rem;
     border: 1px solid #DDD;
@@ -233,9 +222,8 @@ input, select {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-
 #address-form button {
-    background-color: #D91E1E;
+    background-color: #ff9900;
     color: #FFF;
     border: none;
     padding: 0.75rem;
@@ -248,10 +236,8 @@ input, select {
     width: 100%;
 }
 
-
-
 #address-form button:hover {
-    background-color: #A61717;
+    background-color: #e68a00;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -268,7 +254,7 @@ input, select {
 }
 
 .existing-address:hover {
-    border-color: #D91E1E;
+    border-color: #ff9900;
     transform: scale(1.02);
 }
 
@@ -284,25 +270,12 @@ hr {
     font-weight: bold;
     color: #333;
 }
+
 .inline-fields {
     display: flex;
     gap: 15px;
     width: 97%;
 }
-
-/* Adaptación responsiva */
-@media (max-width: 768px) {
-    #address-form button {
-        font-size: 0.9rem;
-        padding: 0.6rem;
-    }
-
-    .existing-address {
-        flex-direction: column;
-        gap: 5px;
-    }
-}
-
 
 /* Estilo de formulario de pago */
 #payment-form {
@@ -315,12 +288,12 @@ hr {
 #payment-form label {
     font-weight: bold;
     font-size: 1rem;
-    color: #D91E1E;
+    color: #1a1a1a;
 }
 
 #payment-form input,
 #payment-form select {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     padding: 0.5rem;
     border: 1px solid #DDD;
@@ -332,7 +305,7 @@ hr {
 }
 
 #payment-form button {
-    background-color: #D91E1E;
+    background-color: #ff9900;
     color: #FFF;
     border: none;
     padding: 0.75rem;
@@ -346,7 +319,7 @@ hr {
 }
 
 #payment-form button:hover {
-    background-color: #A61717;
+    background-color: #e68a00;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -354,4 +327,185 @@ hr {
     display: flex;
     gap: 15px;
     width: 97%;
+}
+/* Menú lateral */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #343a40;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    padding-top: 80px;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #1a1a1a;
+}
+
+/* Logo de la pizzería */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.logo h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #ff9900; /* Color naranja para el nombre */
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    margin: 0;
+}
+
+.sidebar-menu li a {
+    display: block;
+    padding: 1rem;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-menu li a:hover {
+    background-color: #495057;
+}
+
+.sidebar-menu li a i {
+    margin-right: 10px;
+}
+
+/* Botón para abrir el menú */
+.open-btn {
+    position: fixed;
+    top: 60px;
+    left: 0px;
+    background-color: #343a40;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1001;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.open-btn:hover {
+    background-color: #495057;
+}
+
+/* Contenido principal */
+.main-content {
+    margin-left: 0;
+    padding: 2rem;
+    transition: margin-left 0.3s ease;
+}
+.sidebar-menu {
+    margin-top: 15px; /* Mueve el menú hacia abajo */
+}
+/* Cuando el menú está abierto */
+.sidebar.active {
+    left: 0;
+}
+
+
+.main-content.active {
+    margin-left: 250px;
+}
+/* Footer */
+footer {
+    background-color: #232f3e;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 220px;
+    font-size: 14px;
+}
+
+footer .footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+footer .footer-section {
+    flex: 1;
+    min-width: 200px;
+}
+
+footer .footer-section h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #ff9900;
+}
+
+footer .footer-section p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+footer .footer-section a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer .footer-section a:hover {
+    color: #ff9900;
+}
+
+footer .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+footer .social-icons a {
+    color: white;
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+footer .social-icons a:hover {
+    color: #ff9900;
+}
+
+footer .footer-bottom {
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+    font-size: 12px;
 }

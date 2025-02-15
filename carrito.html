@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,70 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito de Compra</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="./CSS/estiloCarrito.css">
-    <style>
-        /* Estilos para el modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .modal h3 {
-            margin-bottom: 15px;
-        }
-
-        .modal button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .btn-delivery {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .btn-pickup {
-            background-color: #007BFF;
-            color: white;
-        }
-
-        .btn-close {
-            background-color: #ff4d4d;
-            color: white;
-        }
-    </style>
 </head>
 <body>
+         <!-- Menú lateral -->
+         <aside class="sidebar">
+          
+            <ul class="sidebar-menu">
+                <li><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
+                <li><a href="./carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                <li><a href="./pago.html"><i class="fas fa-credit-card"></i> Pago</a></li>
+                <li><a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a></li>
+            </ul>
+        </aside>
+        <!-- Botón para abrir el menú -->
+        <button class="open-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
     <header>
         <nav>
             <a href="index.html" class="carrito-link">
                 <i class="fas fa-shopping-cart"></i> PRODUCTOS
             </a>
-            
             <div class="cart-icon">
                 <span>Carrito</span>
                 <i class="fa-solid fa-cart-shopping"></i>
@@ -94,7 +53,30 @@
     </main>
 
     <footer>
-        <span>Todos los derechos reservados</span>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>Email: info@tiendaonline.com</p>
+                <p>Teléfono: +123 456 789</p>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces rápidos</h4>
+                <a href="#">Términos y condiciones</a>
+                <a href="#">Política de privacidad</a>
+                <a href="#">Preguntas frecuentes</a>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>Todos los derechos reservados &copy; 2023 Tienda Online</span>
+        </div>
     </footer>
 
     <!-- Modal para seleccionar entrega -->
@@ -108,6 +90,12 @@
     </div>
 
     <script>
+    function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+    sidebar.classList.toggle('active');
+    mainContent.classList.toggle('active');
+}
         window.onload = function() {
             const cliente = JSON.parse(localStorage.getItem('usuario'));
             const loginButton = document.querySelector('.login-button');
@@ -182,6 +170,6 @@
             window.location.href = "pago.html";
         }
     </script>
-    
+
 </body>
 </html>
