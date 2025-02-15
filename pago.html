@@ -14,40 +14,30 @@
          <aside class="sidebar">
            
             <ul class="sidebar-menu">
-                <li><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
+                <li class="index"><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
                 <li><a href="./carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
                 <li><a href="./pago.html"><i class="fas fa-credit-card"></i> Pago</a></li>
-                <li><a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a></li>
-            </ul>
+                 </ul>
         </aside>
         <!-- Botón para abrir el menú -->
         <button class="open-btn" onclick="toggleSidebar()">
             <i class="fas fa-bars"></i>
         </button>
-    <header class="header">
-        <div class="header-logo">
-            <h1><i class="fas fa-shopping-cart"></i> Confirmación de Envío</h1>
-        </div>
-        <nav class="header-nav">
-            <ul>
-                <li><a href="#shipping"><i class="fas fa-map-marker-alt"></i> Dirección de Envío</a></li>
-                <li><a href="#customs"><i class="fas fa-box"></i> Despacho Aduanero</a></li>
-                <li><a href="#payment"><i class="fas fa-credit-card"></i> Método de Pago</a></li>
-                <li><a href="#offers"><i class="fas fa-tags"></i> Ofertas</a></li>
-            </ul>
-        </nav>
-        <div class="login-container">
-            <div class="login-button">
-                Anónimo <i class="fas fa-user"></i>
+        <header>
+            <div>
+                <h1><i class="fas fa-shopping-cart"></i> PIZZA GO</h1>
             </div>
-        </div>
-    </header>
+            <div id="login-container" class="login-container">
+                <div class="login-button">Iniciar sesión</div>
+            </div>
+        </header>
+    
     <main class="container">
         <section class="flex-container" id="shipping">
             <h2><i class="fas fa-map-marker-alt"></i> Dirección de Envío</h2>
-            <input type="text" id="address-search" placeholder="Buscar dirección..." style="width: 100%; padding: 10px; margin-bottom: 20px;">
+            <input type="text" id="address-search" placeholder="Buscar dirección..." style="width: 95%; padding: 10px; margin-bottom: 20px;">
             <div id="map" style="height: 300px; width: 100%; margin-bottom: 20px;"></div>
-            <input type="text" id="address" placeholder="Dirección seleccionada" readonly required>
+            <input type="text" id="address"  style="width: 60%;" placeholder="Dirección seleccionada" readonly required>
             <p id="address-error" class="error-message" style="color: red; display: none;">Por favor, selecciona una dirección.</p>
         </section>
         <section class="flex-container" id="payment">
@@ -61,13 +51,13 @@
                 </label>
             </div>
             <div id="card-fields">
-                <input type="text" id="card-number" placeholder="Número de tarjeta" required>
-                <input type="text" id="card-expiry" placeholder="MM/AA" required>
-                <input type="text" id="card-cvv" placeholder="CVV" required>
+                <input type="text" id="card-number" class="pago" placeholder="Número de tarjeta" required>
+                <input type="text" id="card-expiry" class="pago" placeholder="MM/AA" required>
+                <input type="text" id="card-cvv" class="pago" placeholder="CVV" required>
             </div>
             <div id="paypal-fields" style="display: none;">
-                <input type="email" id="paypal-email" placeholder="Correo electrónico de PayPal" required>
-                <input type="password" id="paypal-password" placeholder="Contraseña de PayPal" required>
+                <input type="email" style="width: 25em;" id="paypal-email" class="pago" placeholder="Correo electrónico de PayPal" required>
+                <input type="password" id="paypal-password" class="pago" placeholder="Contraseña de PayPal" required>
             </div>
             <p id="payment-error" class="error-message" style="color: red; display: none;">Por favor, completa los campos de pago.</p>
         </section>
@@ -80,9 +70,9 @@
     </main>
     <footer>
         <div>
-            <a href="#">Términos y condiciones</a>
-            <a href="#">Política de privacidad</a>
-            <a href="#">Contacto</a>
+            <span>Términos y condiciones</span>
+            <span>Política de privacidad</span>
+            <span>Contacto</span>
         </div>
         <p>&copy; 2023 Tienda Online. Todos los derechos reservados.</p>
         <div class="social-icons">
@@ -98,101 +88,116 @@
     sidebar.classList.toggle('active');
     mainContent.classList.toggle('active');
 }
-        document.addEventListener("DOMContentLoaded", function () {
-            const tipoEntrega = localStorage.getItem("tipoEntrega");
-            if (tipoEntrega === "A domicilio") {
-                document.getElementById("shipping").style.display = "block";
-                initMap();
-            } else {
-                document.getElementById("shipping").style.display = "none";
+document.addEventListener("DOMContentLoaded", function () {
+    const tipoEntrega = localStorage.getItem("tipoEntrega");
+    if (tipoEntrega === "A domicilio") {
+        document.getElementById("shipping").style.display = "block";
+        initMapWithRetry(); // Llamamos a la función con reintento
+    } else {
+        document.getElementById("shipping").style.display = "none";
+    }
+
+    document.querySelectorAll('input[name="payment"]').forEach((radio) => {
+        radio.addEventListener('change', function () {
+            const selectedPayment = this.value;
+            if (selectedPayment === 'tarjeta') {
+                document.getElementById('card-fields').style.display = 'block';
+                document.getElementById('paypal-fields').style.display = 'none';
+            } else if (selectedPayment === 'paypal') {
+                document.getElementById('card-fields').style.display = 'none';
+                document.getElementById('paypal-fields').style.display = 'block';
             }
-
-            document.querySelectorAll('input[name="payment"]').forEach((radio) => {
-                radio.addEventListener('change', function() {
-                    const selectedPayment = this.value;
-                    if (selectedPayment === 'tarjeta') {
-                        document.getElementById('card-fields').style.display = 'block';
-                        document.getElementById('paypal-fields').style.display = 'none';
-                    } else if (selectedPayment === 'paypal') {
-                        document.getElementById('card-fields').style.display = 'none';
-                        document.getElementById('paypal-fields').style.display = 'block';
-                    }
-                    validateForm();
-                });
-            });
-
-            const cliente = JSON.parse(localStorage.getItem('usuario'));
-            const carrito = JSON.parse(localStorage.getItem('carrito'));
-            const cartData = carrito.productos;
-
-            if (cliente) {
-                document.querySelector('.login-button').innerHTML = `Hola, ${cliente.nombre} <i class="fas fa-user"></i>`;
-            }
-
-            if (cartData.length > 0) {
-                const orderSummary = document.getElementById('order-summary-list');
-                cartData.forEach(product => {
-                    const item = document.createElement('li');
-                    item.innerHTML = `${product.nombre} x${product.cantidad}: <span>$${product.subtotal.toFixed(2)}</span>`;
-                    orderSummary.appendChild(item);
-                });
-                document.getElementById('total-price').textContent = `$${carrito.total.toFixed(2)}`;
-            } else {
-                showToast('El carrito está vacío.', 'error');
-            }
-
-            // Validar el formulario cada vez que se cambia un campo
-            document.querySelectorAll('input').forEach(input => {
-                input.addEventListener('input', validateForm);
-            });
-
-            // Validar el formulario al cargar la página
             validateForm();
         });
+    });
 
-        function initMap() {
-            const mapContainer = document.getElementById("map");
-            if (!mapContainer) return;
+    const cliente = JSON.parse(localStorage.getItem('usuario'));
+    const carrito = JSON.parse(localStorage.getItem('carrito'));
+    const cartData = carrito.productos;
 
-            const map = new google.maps.Map(mapContainer, {
-                center: { lat: -0.31456780433654785, lng: -78.4426040649414 },
-                zoom: 12,
-            });
+    if (cliente) {
+        document.querySelector('.login-button').innerHTML = `Hola, ${cliente.nombre} <i class="fas fa-user"></i>`;
+    }
 
-            const marker = new google.maps.Marker({
-                map: map,
-                position: { lat: -0.31456780433654785, lng: -78.4426040649414 },
-                title: "Ubicación",
-                draggable: true,
-            });
+    if (cartData.length > 0) {
+        const orderSummary = document.getElementById('order-summary-list');
+        cartData.forEach(product => {
+            const item = document.createElement('li');
+            item.innerHTML = `${product.nombre} x${product.cantidad}: <span>$${product.subtotal.toFixed(2)}</span>`;
+            orderSummary.appendChild(item);
+        });
+        document.getElementById('total-price').textContent = `$${carrito.total.toFixed(2)}`;
+    } else {
+        showToast('El carrito está vacío.', 'error');
+    }
 
-            const geocoder = new google.maps.Geocoder();
-            const input = document.getElementById("address-search");
-            const autocomplete = new google.maps.places.Autocomplete(input);
-            autocomplete.bindTo("bounds", map);
+    // Validar el formulario cada vez que se cambia un campo
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', validateForm);
+    });
 
-            autocomplete.addListener("place_changed", function () {
-                const place = autocomplete.getPlace();
-                if (place.geometry) {
-                    map.panTo(place.geometry.location);
-                    marker.setPosition(place.geometry.location);
-                    document.getElementById("address").value = place.formatted_address;
-                    validateForm();
+    // Validar el formulario al cargar la página
+    validateForm();
+});
+
+function initMapWithRetry(retryCount = 0) {
+    const maxRetries = 5; // Número máximo de reintentos
+    const retryDelay = 2000; // Retardo entre reintentos en milisegundos (2 segundos)
+
+    try {
+        const mapContainer = document.getElementById("map");
+        if (!mapContainer) return;
+
+        const map = new google.maps.Map(mapContainer, {
+            center: { lat: -0.31456780433654785, lng: -78.4426040649414 },
+            zoom: 12,
+        });
+
+        const marker = new google.maps.Marker({
+            map: map,
+            position: { lat: -0.31456780433654785, lng: -78.4426040649414 },
+            title: "Ubicación",
+            draggable: true,
+        });
+
+        const geocoder = new google.maps.Geocoder();
+        const input = document.getElementById("address-search");
+        const autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo("bounds", map);
+
+        autocomplete.addListener("place_changed", function () {
+            const place = autocomplete.getPlace();
+            if (place.geometry) {
+                map.panTo(place.geometry.location);
+                marker.setPosition(place.geometry.location);
+                document.getElementById("address").value = place.formatted_address;
+                validateForm();
+            }
+        });
+
+        map.addListener("click", (e) => {
+            marker.setPosition(e.latLng);
+            geocoder.geocode({ location: e.latLng }, (results, status) => {
+                if (status === "OK" && results[0]) {
+                    document.getElementById("address").value = results[0].formatted_address;
+                } else {
+                    document.getElementById("address").value = "No se pudo obtener la dirección";
                 }
+                validateForm();
             });
+        });
+    } catch (error) {
+        console.error("Error al inicializar el mapa:", error);
 
-            map.addListener("click", (e) => {
-                marker.setPosition(e.latLng);
-                geocoder.geocode({ location: e.latLng }, (results, status) => {
-                    if (status === "OK" && results[0]) {
-                        document.getElementById("address").value = results[0].formatted_address;
-                    } else {
-                        document.getElementById("address").value = "No se pudo obtener la dirección";
-                    }
-                    validateForm();
-                });
-            });
+        if (retryCount < maxRetries) {
+            console.log(`Reintentando en ${retryDelay / 1000} segundos... (Intento ${retryCount + 1} de ${maxRetries})`);
+            setTimeout(() => initMapWithRetry(retryCount + 1), retryDelay);
+        } else {
+            console.error("Se agotaron los reintentos. No se pudo inicializar el mapa.");
+            alert("No se pudo cargar el mapa. Por favor, recarga la página.");
         }
+    }
+}
 
         function validateForm() {
             const tipoEntrega = localStorage.getItem("tipoEntrega");

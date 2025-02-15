@@ -9,36 +9,28 @@
     <link rel="stylesheet" href="./CSS/estiloCarrito.css">
 </head>
 <body>
-         <!-- Menú lateral -->
-         <aside class="sidebar">
-          
-            <ul class="sidebar-menu">
-                <li><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
-                <li><a href="./carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
-                <li><a href="./pago.html"><i class="fas fa-credit-card"></i> Pago</a></li>
-                <li><a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a></li>
+      <!-- Menú lateral -->
+      <aside class="sidebar">
+       
+        <ul class="sidebar-menu">
+            <li class="index"><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
+            <li><a href="./carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+            <li><a href="./pago.html"><i class="fas fa-credit-card"></i> Pago</a></li>
             </ul>
-        </aside>
+    </aside>
         <!-- Botón para abrir el menú -->
         <button class="open-btn" onclick="toggleSidebar()">
             <i class="fas fa-bars"></i>
         </button>
-    <header>
-        <nav>
-            <a href="index.html" class="carrito-link">
-                <i class="fas fa-shopping-cart"></i> PRODUCTOS
-            </a>
-            <div class="cart-icon">
-                <span>Carrito</span>
-                <i class="fa-solid fa-cart-shopping"></i>
+        <header>
+            <div>
+                <h1><i class="fas fa-shopping-cart"></i>PIZZA GO</h1>
             </div>
-        </nav>
-        <div class="login-container">
-            <div class="login-button">
-                Anónimo <i class="fas fa-user"></i>
-            </div>  
-        </div>
-    </header>
+            <div id="login-container" class="login-container">
+                <div class="login-button">Iniciar sesión</div>
+            </div>
+            <!-- Carrito de compras -->
+        </header>
 
     <main>
         <section class="cart">
@@ -53,32 +45,18 @@
     </main>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Contacto</h4>
-                <p>Email: info@tiendaonline.com</p>
-                <p>Teléfono: +123 456 789</p>
-            </div>
-            <div class="footer-section">
-                <h4>Enlaces rápidos</h4>
-                <a href="#">Términos y condiciones</a>
-                <a href="#">Política de privacidad</a>
-                <a href="#">Preguntas frecuentes</a>
-            </div>
-            <div class="footer-section">
-                <h4>Síguenos</h4>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
+        <div>
+            <span >Términos y condiciones</span>
+            <span>Política de privacidad</span>
+            <span >Contacto</span>
         </div>
-        <div class="footer-bottom">
-            <span>Todos los derechos reservados &copy; 2023 Tienda Online</span>
+        <p>&copy; 2023 Tienda Online. Todos los derechos reservados.</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
         </div>
     </footer>
-
     <!-- Modal para seleccionar entrega -->
     <div id="modal" class="modal">
         <div class="modal-content">

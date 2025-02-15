@@ -3,21 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
     <title>Detalles del Producto - Pizzería</title>
     <style>
         /* Estilos generales */
+/* Estilos generales */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
+    background: linear-gradient(135deg, #ffcc00, #c82333); /* Fondo degradado con colores de pizza */
     margin: 0;
     padding: 0;
     color: #333;
     line-height: 1.6;
 }
 
+/* Menú lateral */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #c82333; /* Rojo oscuro */
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    padding-top: 80px;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    margin: 0;
+}
+
+.sidebar-menu li a {
+    display: block;
+    padding: 1rem;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-menu li a:hover {
+    background-color: #a71d2a; /* Rojo más oscuro al pasar el mouse */
+}
+
+.sidebar-menu li a i {
+    margin-right: 10px;
+}
+
+/* Botón para abrir el menú */
+.open-btn {
+    position: fixed;
+    top: 10px;
+    left: 0px;
+    background-color: #c82333; /* Rojo oscuro */
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1001;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.open-btn:hover {
+    background-color: #a71d2a; /* Rojo más oscuro al pasar el mouse */
+}
+
 /* Header */
 header {
-    background-color: #343a40;
+    background-color: #c82333; /* Rojo oscuro */
     color: #fff;
     padding: 15px 20px;
     display: flex;
@@ -29,7 +96,7 @@ header {
     z-index: 1000;
 }
 
-.header-logo h1 {
+header h1 {
     margin: 0;
     font-size: 24px;
     font-weight: bold;
@@ -38,9 +105,9 @@ header {
     gap: 10px;
 }
 
-.header-logo i {
+header h1 i {
     font-size: 28px;
-    color: #ff9900;
+    color: #ffcc00; /* Amarillo */
 }
 
 /* Login Container */
@@ -51,7 +118,7 @@ header {
 .login-button {
     cursor: pointer;
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #c82333; /* Verde */
     border-radius: 5px;
     transition: background-color 0.3s ease, transform 0.2s ease;
     font-size: 16px;
@@ -59,72 +126,11 @@ header {
 }
 
 .login-button:hover {
-    background-color: #218838;
+    background-color: #c82333; /* Verde más oscuro al pasar el mouse */
     transform: translateY(-2px);
 }
 
-.login-dropdown {
-    display: none;
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 250px;
-    z-index: 1000;
-}
-
-.login-dropdown input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s ease;
-}
-
-.login-dropdown input:focus {
-    border-color: #28a745;
-    outline: none;
-}
-
-.login-dropdown button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.login-dropdown button:hover {
-    background-color: #218838;
-}
-
-.create-account {
-    margin-top: 10px;
-    text-align: center;
-    font-size: 14px;
-    color: #555;
-}
-
-.create-account a {
-    color: #28a745;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.create-account a:hover {
-    color: #218838;
-}
-
-/* Container */
+/* Contenedor de productos */
 .container {
     display: flex;
     padding: 30px;
@@ -170,19 +176,19 @@ header {
 }
 
 .store a {
-    color: #28a745;
+    color: #c82333; /* Verde */
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .store a:hover {
-    color: #218838;
+    color: #c82333; /* Verde más oscuro al pasar el mouse */
 }
 
 .rating {
     margin: 15px 0;
     font-size: 20px;
-    color: #ffc107;
+    color: #ffc107; /* Amarillo */
 }
 
 .price {
@@ -193,7 +199,7 @@ header {
 }
 
 .discount {
-    color: #28a745;
+    color: #c82333; /* Verde */
     margin-left: 10px;
     font-size: 20px;
 }
@@ -249,14 +255,14 @@ header {
 
 .pizza-form select:focus,
 .pizza-form input[type="checkbox"]:focus {
-    border-color: #28a745;
+    border-color: #c82333; /* Verde */
     outline: none;
 }
 
 .pizza-form button {
     width: 100%;
     padding: 12px;
-    background-color: #28a745;
+    background-color: #c82333; /* Verde */
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -267,7 +273,7 @@ header {
 }
 
 .pizza-form button:hover {
-    background-color: #218838;
+    background-color: #c82333; /* Verde más oscuro al pasar el mouse */
     transform: translateY(-2px);
 }
 
@@ -275,152 +281,91 @@ header {
 #totalPrice {
     font-size: 24px;
     font-weight: bold;
-    color: #28a745;
+    color: #c82333; /* Verde */
     margin: 15px 0;
 }
-/* Menú lateral */
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    background-color: #343a40;
-    color: #fff;
-    position: fixed;
-    top: 0;
-    left: -250px;
-    transition: left 0.3s ease;
-    z-index: 1000;
-    padding-top: 80px;
+
+/* Footer */
+footer {
+    background-color: #333; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    padding: 20px;
+    text-align: center;
+    margin-top: 30px;
 }
 
-.sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: #1a1a1a;
-}
-
-/* Logo de la pizzería */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
-.logo h2 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #ff9900; /* Color naranja para el nombre */
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.sidebar-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar-menu li {
-    margin: 0;
-}
-
-.sidebar-menu li a {
-    display: block;
-    padding: 1rem;
-    color: #fff;
+footer a {
+    color: #ffcc00; /* Amarillo */
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    margin: 0 10px;
 }
 
-.sidebar-menu li a:hover {
-    background-color: #495057;
+footer a:hover {
+    color: #e6b800; /* Amarillo más oscuro al pasar el mouse */
 }
 
-.sidebar-menu li a i {
-    margin-right: 10px;
+.social-icons {
+    margin-top: 10px;
 }
 
-/* Botón para abrir el menú */
-.open-btn {
-    position: fixed;
-    top: 60px;
-    left: 0px;
-    background-color: #343a40;
-    color: #fff;
+.social-icons a {
+    color: #fff; /* Texto blanco */
+    margin: 0 10px;
+    font-size: 1.2em;
+}
+
+.social-icons a:hover {
+    color: #ffcc00; /* Amarillo al pasar el mouse */
+}
+
+/* Ajustes para el botón "Cerrar sesión" */
+.cerrar-sesion {
+    background-color: #ffcc00; /* Amarillo */
     border: none;
-    padding: 10px 15px;
-    font-size: 1.2rem;
+    color: #333; /* Texto oscuro */
+    padding: 10px 20px;
     cursor: pointer;
-    z-index: 1001;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
-.open-btn:hover {
-    background-color: #495057;
+.cerrar-sesion:hover {
+    background-color: #e6b800; /* Amarillo más oscuro */
 }
 
-/* Contenido principal */
-.main-content {
-    margin-left: 0;
-    padding: 2rem;
-    transition: margin-left 0.3s ease;
-}
-.sidebar-menu {
-    margin-top: 15px; /* Mueve el menú hacia abajo */
-}
-/* Cuando el menú está abierto */
-.sidebar.active {
-    left: 0;
-}
-
-.main-content.active {
-    margin-left: 250px;
-}
-    </style>
+   </style>
 </head>
 <body>
-         <!-- Menú lateral -->
-         <aside class="sidebar">
-          
-            <ul class="sidebar-menu">
-                <li><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
-                <li><a href="./carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
-                <li><a href="./pago.html"><i class="fas fa-credit-card"></i> Pago</a></li>
-                <li><a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a></li>
+      <!-- Menú lateral -->
+      <aside class="sidebar">
+       
+        <ul class="sidebar-menu">
+            <li class="index"><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
+            <li><a href="./carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+            <li><a href="./pago.html"><i class="fas fa-credit-card"></i> Pago</a></li>
             </ul>
-        </aside>
-        <!-- Botón para abrir el menú -->
-        <button class="open-btn" onclick="toggleSidebar()">
-            <i class="fas fa-bars"></i>
-        </button>
+    </aside>
+    <!-- Botón para abrir el menú -->
+    <button class="open-btn" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
     <header>
-        <div class="header-logo">
-            <h1><i class="fas fa-shopping-cart"></i> Detalles Producto </h1>
+        <div>
+            <button class="cerrar-sesion" onclick="cerrarSesion()">Cerrar sesión</button>
+        </div>
+        <div>
+            <h1><i class="fas fa-shopping-cart"></i>PIZZA GO</h1>
         </div>
         <div id="login-container" class="login-container">
-            <div class="login-button" onclick="toggleLogin()">Iniciar sesión</div>
-            <div class="login-dropdown">
-                <input type="text" id="correo" placeholder="Correo" />
-                <input type="password" id="contraseña" placeholder="Contraseña" />
-                <button onclick="iniciarSesion()">Acceder</button>
-                <p class="create-account">
-                    <a href="login.html">Crear cuenta</a>
-                </p>
-            </div>
+            <a href="login.html"><div class="login-button">Iniciar sesión</div></a>
+        </div>
+        <!-- Carrito de compras -->
+        <div>
+            <a href="carrito.html" class="carrito-link">
+                <i class="fas fa-shopping-cart"></i> Ver Carrito
+            </a>
         </div>
     </header>
 
@@ -433,21 +378,13 @@ header {
         <!-- Details Section -->
         <div class="details-section">
             <h1 id="productTitle"></h1>
-            <p class="store">Visita la tienda de <a href="#" id="productStore">Pizzería Deliciosa</a></p>
-            <div class="rating">
-                <span id="productRating">4.5</span>
-                <span id="productStars">★★★★☆</span>
-                <span id="productReviews"></span>
-            </div>
             <p class="price">
                 <span class="current-price" id="productPrice"></span>
             </p>
             <p id="productDescription">Deliciosa Pizza Pepperoni con ingredientes frescos y sabrosos.</p>
-
-            <!-- Pizza Customization Form -->
             <div class="pizza-form">
                 <h2>Personaliza tu Pizza</h2>
-                <form id="pizzaForm" onsubmit="calcularTotal(event)">
+                <form id="pizzaForm">
                     <label for="masa">Tipo de Masa:</label>
                     <select id="masa" name="masa">
                         <option value="normal">Normal</option>
@@ -467,111 +404,133 @@ header {
                     <label><input type="checkbox" name="ingredientes_extra" value="pepperoni"> Pepperoni (+$1)</label>
 
                     <p><strong>Total: <span id="totalPrice">$2.50</span></strong></p>
-                    <button type="submit">Ordenar Pizza</button>
+                    <button type="button" onclick="enviarAlBackend()">Ordenar Pizza</button>
                 </form>
             </div>
         </div>
     </div>
-
     <script>
-    function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
-    sidebar.classList.toggle('active');
-    mainContent.classList.toggle('active');
-}
-        const usuario = JSON.parse(localStorage.getItem('usuario'));
-const pizza = JSON.parse(localStorage.getItem('producto'));
-console.log(pizza);
+        function cerrarSesion() {
+            localStorage.removeItem('usuario');
+            location.reload();
+        }
 
-// Mostrar los datos de la pizza en la página
-document.getElementById("productImage").src = pizza.imagen_url.toString();
-document.getElementById("productTitle").textContent = pizza.nombre;
-document.getElementById("productDescription").textContent = pizza.descripcion;
-document.getElementById("productPrice").textContent = `$${pizza.precio}`;
+        window.onload = function () {
+            const cliente = JSON.parse(localStorage.getItem('usuario'));
+            if (cliente) {
+                document.getElementById('login-container').innerHTML =
+                    `<span>Hola, ${cliente.nombre}</span>`;
+            }
+        };
 
-        // Función para calcular el total
-        function calcularTotal(event) {
-    event.preventDefault(); // Evitar que el formulario se envíe
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('active');
+        }
 
-    // Obtener los valores seleccionados
-    const masa = document.getElementById("masa").value;
-    const tamaño = document.getElementById("tamaño").value;
-    const ingredientesExtra = document.querySelectorAll('input[name="ingredientes_extra"]:checked');
+        const pizza = JSON.parse(localStorage.getItem('producto'));
+        console.log(pizza);
 
-    // Calcular el precio base
-    let total = parseFloat(pizza.precio);
+        // Mostrar los datos de la pizza en la página
+        document.getElementById("productImage").src = pizza.imagen_url.toString();
+        document.getElementById("productTitle").textContent = pizza.nombre;
+        document.getElementById("productDescription").textContent = pizza.descripcion;
 
-    // Ajustar el precio según la masa
-    if (masa === "integral") {
-        total += 2; // Aumentar $2 por masa integral
-    }
+        // Función para calcular el total en tiempo real
+        function modificarTotal() {
+            // Obtener valores seleccionados
+            const masa = document.getElementById("masa").value;
+            const tamaño = document.getElementById("tamaño").value;
+            const ingredientesExtra = document.querySelectorAll('input[name="ingredientes_extra"]:checked');
 
-    // Ajustar el precio según el tamaño
-    if (tamaño === "pequeña") {
-        total /= 2; // Dividir el precio por 2 para tamaño pequeño
-    } else if (tamaño === "grande") {
-        total *= 2; // Duplicar el precio para tamaño grande
-    }
+            // Calcular el precio base
+            let total = parseFloat(pizza.precio);
 
-    // Añadir $1 por cada ingrediente extra
-    ingredientesExtra.forEach(ingrediente => {
-        total += 1;
-    });
+            // Ajustar precio según la masa
+            if (masa === "integral") {
+                total += 2;
+            }
 
-    // Mostrar el total en la página
-    document.getElementById("totalPrice").textContent = `$${total.toFixed(2)}`;
+            // Ajustar precio según el tamaño
+            if (tamaño === "pequeña") {
+                total /= 2;
+            } else if (tamaño === "grande") {
+                total *= 2;
+            }
 
-    // Enviar los datos al backend
-    const opciones = {
-        masa: masa,
-        tamaño: tamaño,
-        ingredientes_extra: Array.from(ingredientesExtra).map(ing => ing.value),
-        total: total // Enviar como número, no como cadena de texto
-    };
+            // Añadir $1 por cada ingrediente extra
+            ingredientesExtra.forEach(() => {
+                total += 1;
+            });
 
-    enviarAlBackend(opciones);
-}
+            // Mostrar total actualizado
+            document.getElementById("totalPrice").textContent = `$${total.toFixed(2)}`;
+        }
 
-// Función para enviar los datos al backend
-async function enviarAlBackend(opciones) {
-    const cliente = JSON.parse(localStorage.getItem('usuario'));
-    const producto = JSON.parse(localStorage.getItem('producto'));
-
-    if (!cliente) {
-        alert("Debes estar logueado para agregar productos al carrito");
-        return;
-    }
-
-    const clienteId = cliente._id;
-    const productoId = producto._id; // Obtener el ID del producto desde localStorage
-
-    try {
-        const response = await fetch('http://localhost:5000/agregar-al-carrito', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                usuario_id: clienteId,
-                producto_id: productoId, // Usar el ID del producto
-                cantidad: 1, // Cantidad fija (puedes cambiarla si es necesario)
-                opciones: opciones // Enviar las opciones personalizadas
-            }),
+        // Agregar eventos para actualizar el total dinámicamente
+        document.getElementById("masa").addEventListener("change", modificarTotal);
+        document.getElementById("tamaño").addEventListener("change", modificarTotal);
+        document.querySelectorAll('input[name="ingredientes_extra"]').forEach(input => {
+            input.addEventListener("change", modificarTotal);
         });
 
-        const data = await response.json();
+        // Inicializar el total
+        modificarTotal();
 
-        if (response.ok) {
-            alert("Producto agregado al carrito");
-        } else {
-            alert(data.message || "Ocurrió un error al agregar el producto al carrito");
+        // Función para enviar los datos al backend
+        async function enviarAlBackend() {
+            const cliente = JSON.parse(localStorage.getItem('usuario'));
+            const producto = JSON.parse(localStorage.getItem('producto'));
+
+            if (!cliente) {
+                alert("Debes estar logueado para agregar productos al carrito");
+                return;
+            }
+
+            const clienteId = cliente._id;
+            const productoId = producto._id;
+
+            // Obtener los valores seleccionados
+            const masa = document.getElementById("masa").value;
+            const tamaño = document.getElementById("tamaño").value;
+            const ingredientesExtra = document.querySelectorAll('input[name="ingredientes_extra"]:checked');
+            const total = parseFloat(document.getElementById("totalPrice").textContent.replace('$', ''));
+
+            const opciones = {
+                masa: masa,
+                tamaño: tamaño,
+                ingredientes_extra: Array.from(ingredientesExtra).map(ing => ing.value),
+                total: total
+            };
+
+            try {
+                const response = await fetch('http://localhost:5000/agregar-al-carrito', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        usuario_id: clienteId,
+                        producto_id: productoId,
+                        cantidad: 1,
+                        opciones: opciones
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("Producto agregado al carrito");
+                } else {
+                    alert(data.message || "Ocurrió un error al agregar el producto al carrito");
+                }
+            } catch (error) {
+                console.error("Error en la petición:", error);
+                alert("No se pudo conectar con el servidor");
+            }
         }
-    } catch (error) {
-        console.error("Error en la petición:", error);
-        alert("No se pudo conectar con el servidor");
-    }
-} 
     </script>
 </body>
 </html>

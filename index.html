@@ -12,7 +12,7 @@
       <aside class="sidebar">
        
         <ul class="sidebar-menu">
-            <li><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
+            <li class="index"><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
             <li><a href="./carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
             <li><a href="./pago.html"><i class="fas fa-credit-card"></i> Pago</a></li>
             <li><a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a></li>
@@ -28,7 +28,7 @@
             <button class="cerrar-sesion" onclick="cerrarSesion()">Cerrar sesión</button>
         </div>
         <div>
-            <h1><i class="fas fa-shopping-cart"></i> Tienda Online</h1>
+            <h1><i class="fas fa-shopping-cart"></i>PIZZA GO</h1>
         </div>
         <div id="login-container" class="login-container">
             <a href="login.html"><div class="login-button">Iniciar sesión</div></a>
@@ -40,12 +40,7 @@
             </a>
         </div>
     </header>
-    
-      
 
-
-
-    <h1>Nuestros Productos</h1>
     <div id="contenedor-productos"></div>
 
     <footer>
@@ -92,23 +87,16 @@
         for (const tipo in productosPorTipo) {
             const tipoHTML = `
                 <div class="tipo">
-                    <h2>${tipo}</h2>
+                    <h2>${tipo.toUpperCase()}</h2>
                     <div class="productos">
                         ${productosPorTipo[tipo].map(producto => {
                             return `
                                 <div class="producto">
                                     <img src="${producto.imagen_url || 'https://via.placeholder.com/200'}" alt="${producto.nombre}">
                                     <div>
-                                        <h3>${producto.nombre}</h3>
+                                        <h3>${producto.nombre.toUpperCase()}</h3>
                                         <p>Precio: $${producto.precio}</p>
-                                        <div class="rating">
-                                            ${mostrarRating(producto.rating)}  <!-- Si tienes un sistema de rating, lo puedes mostrar aquí -->
-                                        </div>
                                         <button onclick="infoProductos('${producto._id}')">Ver detalles</button>
-                                    </div>
-                                    <div class="detalles-adicionales">
-                                        <p><strong>Tipo:</strong> ${producto.tipo || 'No disponible'}</p>  <!-- Cambié 'Categoria' por 'Tipo' -->
-                                        <p><strong>Descripción:</strong> ${producto.descripcion || 'No disponible'}</p>
                                     </div>
                                 </div>
                             `;
@@ -124,18 +112,7 @@
     }
     
     
-        // Función para mostrar el rating en estrellas
-        function mostrarRating(rating) {
-            let estrellas = '';
-            for (let i = 1; i <= 5; i++) {
-                if (i <= rating) {
-                    estrellas += `<span class="star">&#9733;</span>`; // Estrella llena
-                } else {
-                    estrellas += `<span class="star star-empty">&#9734;</span>`; // Estrella vacía
-                }
-            }
-            return estrellas;
-        }
+
     
         async function infoProductos(productId) {
     const response = await fetch('http://localhost:5000/get-productos');

@@ -1,324 +1,30 @@
 /* Estilos generales */
+/* Estilos generales */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    background: rgb(255, 193, 106);
+    color: #333; /* Texto oscuro */
 }
 
-/* Header */
-header {
-    background-color: #232f3e;
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-header h1 i {
-    font-size: 28px;
-    color: #ff9900;
-}
-
-.cerrar-sesion {
-    background-color: #ff4444;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.cerrar-sesion:hover {
-    background-color: #cc0000;
-}
-
-.login-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.login-button {
-    background-color: #A61717;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.login-button:hover {
-    background-color: #8c1212;
-}
-
-.carrito-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #fff;
-    background-color: #ff9900;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.carrito-link i {
-    margin-right: 10px;
-    font-size: 18px;
-}
-
-.carrito-link:hover {
-    background-color: #e68a00;
-}
-
-/* Main */
-h1 {
-    text-align: center;
-    color: #232f3e;
-    margin: 20px 0;
-    font-size: 32px;
-}
-
-#contenedor-productos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
-    flex: 1;
-}
-
-.categoria {
-    width: 100%;
-    margin-bottom: 30px;
-}
-
-.categoria h2 {
-    text-align: center;
-    color: #232f3e;
-    font-size: 24px;
-    margin-bottom: 15px;
-}
-
-.producto {
-    background-color: #fff;
-    width: 250px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-}
-
-.producto:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.producto img {
-    width: 100%;
-    height: 200px;
-    object-fit: contain;
-    background-color: #f9f9f9;
-    padding: 10px;
-}
-
-.producto div {
-    padding: 15px;
-}
-
-.producto h3 {
-    font-size: 18px;
-    color: #232f3e;
-    margin: 0;
-}
-
-.producto p {
-    font-size: 16px;
-    color: #ff9900;
-    margin: 10px 0;
-}
-
-.producto button {
-    padding: 10px;
-    background-color: #ff9900;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.producto button:hover {
-    background-color: #e68a00;
-}
-
-.detalles-adicionales {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.9);
-    color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    width: 80%;
-    text-align: left;
-}
-
-.producto:hover .detalles-adicionales {
-    display: block;
-}
-
-.detalles-adicionales p {
-    margin: 5px 0;
-    font-size: 14px;
-}
-
-.productos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.productos .producto {
-    flex: 0 0 calc(33.333% - 20px);
-    margin-bottom: 20px;
-}
-
-/* Estilos para el rating */
-.rating {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0;
-}
-
-.star {
-    font-size: 20px;
-    color: #ff9900;
-    cursor: pointer;
-}
-
-.star-empty {
-    color: #ccc;
-}
-
-/* Footer */
-footer {
-    background-color: #232f3e;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    margin-top: auto;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-}
-
-footer a {
-    color: #ff9900;
-    text-decoration: none;
-    margin: 0 10px;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #e68a00;
-}
-
-footer p {
-    margin: 10px 0;
-    font-size: 14px;
-}
-
-footer .social-icons {
-    margin-top: 10px;
-}
-
-footer .social-icons a {
-    font-size: 20px;
-    margin: 0 10px;
-    color: #fff;
-    transition: color 0.3s ease;
-}
-
-footer .social-icons a:hover {
-    color: #ff9900;
-}
 /* Menú lateral */
 .sidebar {
     width: 250px;
-    height: 100vh;
-    background-color: #343a40;
-    color: #fff;
+    height: 100%;
+    background-color: #c82333; /* Rojo oscuro */
     position: fixed;
     top: 0;
     left: -250px;
     transition: left 0.3s ease;
     z-index: 1000;
-    padding-top: 80px;
+}
+.index{
+    margin-top: 50px;
 }
 
-.sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: #1a1a1a;
-}
-
-/* Logo de la pizzería */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
-.logo h2 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #ff9900; /* Color naranja para el nombre */
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.5rem;
-    cursor: pointer;
+.sidebar.active {
+    left: 0;
 }
 
 .sidebar-menu {
@@ -328,59 +34,217 @@ footer .social-icons a:hover {
 }
 
 .sidebar-menu li {
-    margin: 0;
+    padding: 15px;
+    border-bottom: 1px solid #a71d2a; /* Rojo más oscuro */
 }
 
 .sidebar-menu li a {
-    display: block;
-    padding: 1rem;
-    color: #fff;
+    color: #fff; /* Texto blanco */
     text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.sidebar-menu li a:hover {
-    background-color: #495057;
+    display: flex;
+    align-items: center;
 }
 
 .sidebar-menu li a i {
     margin-right: 10px;
 }
 
+.sidebar-menu li a:hover {
+    color: #ffcc00; /* Amarillo al pasar el mouse */
+}
+
 /* Botón para abrir el menú */
 .open-btn {
     position: fixed;
-    top: 60px;
-    left: 0px;
-    background-color: #343a40;
-    color: #fff;
+    top: 20px;
+    left: 20px;
+    background-color: #c82333; /* Rojo oscuro */
     border: none;
-    padding: 10px 15px;
-    font-size: 1.2rem;
+    color: #fff; /* Texto blanco */
+    padding: 10px;
     cursor: pointer;
     z-index: 1001;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
 }
 
 .open-btn:hover {
-    background-color: #495057;
+    background-color: #a71d2a; /* Rojo más oscuro */
 }
 
-/* Contenido principal */
-.main-content {
-    margin-left: 0;
-    padding: 2rem;
+/* Header */
+header {
+    background-color: #c82333; /* Rojo oscuro */
+    color: #fff; /* Texto blanco */
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+header h1 i {
+    margin-right: 10px;
+}
+
+.cerrar-sesion {
+    background-color: #ffcc00; /* Amarillo */
+    border: none;
+    color: #333; /* Texto oscuro */
+    padding: 10px 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.cerrar-sesion:hover {
+    background-color: #e6b800; /* Amarillo más oscuro */
+}
+
+.login-container {
+    position: absolute;
+    top: 30px;
+    right: 200px;
+}
+
+.login-button {
+    background-color: #ffcc00; /* Amarillo */
+    border: none;
+    color: #333; /* Texto oscuro */
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: #e6b800; /* Amarillo más oscuro */
+}
+
+.carrito-link {
+    color: #fff; /* Texto blanco */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.carrito-link i {
+    margin-right: 10px;
+}
+
+.carrito-link:hover {
+    color: #ffcc00; /* Amarillo al pasar el mouse */
+}
+
+/* Contenedor de productos */
+#contenedor-productos {
     transition: margin-left 0.3s ease;
-}
-.sidebar-menu {
-    margin-top: 15px; /* Mueve el menú hacia abajo */
-}
-/* Cuando el menú está abierto */
-.sidebar.active {
-    left: 0;
+    text-align: center;
 }
 
-.main-content.active {
-    margin-left: 250px;
+#contenedor-productos.active {
+    margin-left: 0;
+}
+
+.tipo {
+    margin-bottom: 30px;
+}
+
+.tipo h2 {
+    color: #c82333; /* Rojo oscuro */
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.productos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.producto {
+    background: rgb(252, 221, 178); /* Fondo blanco */
+    border: 1px solid #ddd; /* Borde neutro */
+    border-radius: 10px;
+    width: calc(33.333% - 40px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    width: 25em;
+    height: 24em;
+    text-align: center;
+    margin: 2em;
+
+}
+
+.producto:hover {
+    transform: translateY(-5px);
+}
+
+.producto img {
+    width: 100%;
+    height: 65%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.producto h3 {
+    color: #c82333; /* Rojo oscuro */
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.producto p {
+    color: #666; /* Texto gris */
+    margin: 5px 0;
+}
+
+.producto button {
+    background-color: #ffcc00; /* Amarillo */
+    border: none;
+    color: #333; /* Texto oscuro */
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.producto button:hover {
+    background-color: #e6b800; /* Amarillo más oscuro */
+}
+
+
+
+/* Footer */
+footer {
+    background-color: #333; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    padding: 20px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+footer a {
+    color: #ffcc00; /* Amarillo */
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    color: #e6b800; /* Amarillo más oscuro */
+}
+
+.social-icons {
+    margin-top: 10px;
+}
+
+.social-icons a {
+    color: #fff; /* Texto blanco */
+    margin: 0 10px;
+    font-size: 1.2em;
+}
+
+.social-icons a:hover {
+    color: #ffcc00; /* Amarillo al pasar el mouse */
 }
