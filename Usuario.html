@@ -10,209 +10,209 @@
     <link rel="stylesheet" href="./CSS/estiloprincipal.css">
     <style>
         /* Estilos generales */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
 
-.loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-.loading-content {
-    text-align: center;
-    color: #fff;
-}
+        .loading-content {
+            text-align: center;
+            color: #fff;
+        }
 
-.loading-text {
-    font-size: 2rem;
-    animation: fadeInOut 2s infinite;
-}
+        .loading-text {
+            font-size: 2rem;
+            animation: fadeInOut 2s infinite;
+        }
 
-@keyframes fadeInOut {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
 
-/* Sidebar */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 250px;
-    background-color: #343a40;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            background-color: #343a40;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
 
-.sidebar h4 {
-    color: #fff;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-}
+        .sidebar h4 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
 
-.nav-link {
-    color: #fff;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    transition: background-color 0.3s, transform 0.3s;
-}
+        .nav-link {
+            color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
 
-.nav-link:hover {
-    background-color: #495057;
-    transform: translateX(5px);
-}
+        .nav-link:hover {
+            background-color: #495057;
+            transform: translateX(5px);
+        }
 
-.nav-link.active {
-    background-color: #007bff;
-}
+        .nav-link.active {
+            background-color: #007bff;
+        }
 
-/* Contenido principal */
-.content {
-    margin-left: 250px;
-    padding: 20px;
-}
+        /* Contenido principal */
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
 
-/* Tarjetas de estadísticas */
-.card {
-    border: none;
-    border-radius: 10px;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
+        /* Tarjetas de estadísticas */
+        .card {
+            border: none;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
 
-.card-icon {
-    font-size: 2rem;
-}
+        .card-icon {
+            font-size: 2rem;
+        }
 
-/* Tarjetas de acción */
-.action-card {
-    background-color: #fff;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
+        /* Tarjetas de acción */
+        .action-card {
+            background-color: #fff;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
 
-.action-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-}
+        .action-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
 
-.action-card i {
-    color: #007bff;
-}
+        .action-card i {
+            color: #007bff;
+        }
 
-/* Formulario */
-#form-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
+        /* Formulario */
+        #form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
 
-#form-title {
-    color: #007bff;
-    margin-bottom: 20px;
-}
+        #form-title {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
 
-.form-control {
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
 
-.form-control:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
 
-.btn-primary {
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    transition: background-color 0.3s, transform 0.3s;
-}
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-}
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
 
-/* Tabla de usuarios */
-.table {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
+        /* Tabla de usuarios */
+        .table {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
-.table thead {
-    background-color: #007bff;
-    color: #fff;
-}
+        .table thead {
+            background-color: #007bff;
+            color: #fff;
+        }
 
-.table th, .table td {
-    padding: 12px;
-    text-align: center;
-}
+        .table th, .table td {
+            padding: 12px;
+            text-align: center;
+        }
 
-.table tbody tr {
-    transition: background-color 0.3s;
-}
+        .table tbody tr {
+            transition: background-color 0.3s;
+        }
 
-.table tbody tr:hover {
-    background-color: #f1f1f1;
-}
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
 
-/* Botón de actualizar lista */
-#actualizar-lista {
-    background-color: #28a745;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    color: #fff;
-    transition: background-color 0.3s, transform 0.3s;
-}
+        /* Botón de actualizar lista */
+        #actualizar-lista {
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            color: #fff;
+            transition: background-color 0.3s, transform 0.3s;
+        }
 
-#actualizar-lista:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
-}
+        #actualizar-lista:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
 
-/* Buscador de usuarios */
-#buscar-usuario {
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
+        /* Buscador de usuarios */
+        #buscar-usuario {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
 
-#buscar-usuario:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
+        #buscar-usuario:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -260,7 +260,7 @@ body {
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
                             <h5 class="card-title">Pedidos</h5>
-                                        <h3 id="pedidos-count">0</h3>
+                            <h3 id="pedidos-count">0</h3>
                         </div>
                         <i class="fa fa-list card-icon"></i>
                     </div>
@@ -327,27 +327,27 @@ body {
                 <form id="client-form">
                     <div class="mb-3" id="client-id-container" style="display: none;">
                         <label for="clienteId" class="form-label">ID del Cliente</label>
-                        <input type="text" class="form-control" id="clienteId" readonly>
+                        <input type="text" class="form-control" id="clienteId">
                     </div>
                     <div class="mb-3">
                         <label for="nombreCliente" class="form-label">Nombre del Cliente</label>
-                        <input type="text" class="form-control" id="nombreCliente" required>
+                        <input type="text" class="form-control" id="nombreCliente" >
                     </div>
                     <div class="mb-3">
                         <label for="telefonoCliente" class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" id="telefonoCliente" required>
+                        <input type="text" class="form-control" id="telefonoCliente" >
                     </div>
                     <div class="mb-3">
                         <label for="emailCliente" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="emailCliente" required>
+                        <input type="email" class="form-control" id="emailCliente" >
                     </div>
                     <div class="mb-3">
                         <label for="direccionCliente" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="direccionCliente" required>
+                        <input type="text" class="form-control" id="direccionCliente" >
                     </div>
                     <div class="mb-3">
                         <label for="rolCliente" class="form-label">Rol</label>
-                        <select class="form-control" id="rolCliente" required>
+                        <select class="form-control" id="rolCliente" >
                             <option value="">Seleccione un rol</option>
                             <option value="admin">Administrador</option>
                             <option value="cliente">Cliente</option>
@@ -355,81 +355,77 @@ body {
                     </div>
                     <div class="mb-3">
                         <label for="contrasenaCliente" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="contrasenaCliente" required>
+                        <input type="password" class="form-control" id="contrasenaCliente" >
                     </div>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-primary">Completar</button>
                 </form>
             </div>
-    </div>
+        </div>
     
-            <!-- Bloque para mostrar usuarios -->
-            <div id="lista-clientes" class="container mt-5">
-                <div class="header text-center mb-4">
-                    <h2>Lista de Usuarios</h2>
-                </div>
-                <button id="actualizar-lista" class="btn btn-primary mb-3">Actualizar Lista</button>
-                <input type="text" id="buscar-usuario" class="form-control mb-3" placeholder="Buscar usuario por nombre...">
-                <table class="table table-bordered table-striped">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Teléfono</th>
-                            <th>Dirección</th>
-                            <th>Rol</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-usuarios">
-                        <!-- Aquí se insertarán los usuarios dinámicamente -->
-                    </tbody>
-                </table>
+        <!-- Bloque para mostrar usuarios -->
+        <div id="lista-clientes" class="container mt-5">
+            <div class="header text-center mb-4">
+                <h2>Lista de Usuarios</h2>
             </div>
+            <button id="actualizar-lista" class="btn btn-primary mb-3">Actualizar Lista</button>
+            <input type="text" id="buscar-usuario" class="form-control mb-3" placeholder="Buscar usuario por nombre...">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Dirección</th>
+                        <th>Rol</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-usuarios">
+                    <!-- Aquí se insertarán los usuarios dinámicamente -->
+                </tbody>
+            </table>
         </div>
     </div>
 
     <script src="./JS/panel.js"></script>
     <script>
         // Función para filtrar usuarios en la tabla según el texto ingresado
-document.getElementById('buscar-usuario').addEventListener('keyup', function() {
-    const textoBusqueda = this.value.toLowerCase();
-    const filas = document.querySelectorAll('#tabla-usuarios tr');
+        document.getElementById('buscar-usuario').addEventListener('keyup', function() {
+            const textoBusqueda = this.value.toLowerCase();
+            const filas = document.querySelectorAll('#tabla-usuarios tr');
 
-    filas.forEach(fila => {
-        const nombreUsuario = fila.children[1].textContent.toLowerCase(); // Segundo td es el nombre
-        if (nombreUsuario.includes(textoBusqueda)) {
-            fila.style.display = '';
-        } else {
-            fila.style.display = 'none';
-        }
-    });
-});
-
-
-document.getElementById('actualizar-lista').addEventListener('click', function() {
-            fetch('http://127.0.0.1:5000/get-usuarios')
-            .then(response => response.json())
-            .then(data => {
-                const tabla = document.getElementById('tabla-usuarios');
-                tabla.innerHTML = ''; // Limpiar tabla antes de actualizar
-                
-                data.forEach(usuario => {
-                    console.log(usuario._id);
-                    const fila = `<tr>
-                        <td>${usuario._id}</td>
-                        <td>${usuario.nombre}</td>
-                        <td>${usuario.correo}</td>
-                        <td>${usuario.telefono}</td>
-                        <td>${usuario.direccion}</td>
-                        <td>${usuario.rol}</td>
-                    </tr>`;
-                    tabla.innerHTML += fila;
-                });
-            })
-            .catch(error => console.error('Error al obtener usuarios:', error));
+            filas.forEach(fila => {
+                const nombreUsuario = fila.children[1].textContent.toLowerCase(); // Segundo td es el nombre
+                if (nombreUsuario.includes(textoBusqueda)) {
+                    fila.style.display = '';
+                } else {
+                    fila.style.display = 'none';
+                }
+            });
         });
 
-
+        document.getElementById('actualizar-lista').addEventListener('click', function() {
+            fetch('http://127.0.0.1:5000/get-usuarios')
+                .then(response => response.json())
+                .then(data => {
+                    const tabla = document.getElementById('tabla-usuarios');
+                    tabla.innerHTML = ''; // Limpiar tabla antes de actualizar
+                    
+                    data.forEach(usuario => {
+                        const fila = document.createElement('tr');
+                        fila.innerHTML = `
+                            <td>${usuario._id}</td>
+                            <td>${usuario.nombre}</td>
+                            <td>${usuario.correo}</td>
+                            <td>${usuario.telefono}</td>
+                            <td>${usuario.direccion}</td>
+                            <td>${usuario.rol}</td>
+                        `;
+                        tabla.appendChild(fila);
+                    });
+                })
+                .catch(error => console.error('Error al obtener usuarios:', error));
+        });
 
         document.querySelectorAll('.action-card').forEach(card => {
             card.addEventListener('click', function() {
@@ -439,17 +435,14 @@ document.getElementById('actualizar-lista').addEventListener('click', function()
                 document.getElementById('form-container').style.display = 'block';
                 document.getElementById('client-form').setAttribute('data-action', action);
 
-
                 let labels = Array.from(document.getElementsByTagName('label'));
-                        labels.forEach(label =>label.style.display = 'block');
-                        document.getElementById('nombreCliente').style.display = 'block';
-                         document.getElementById('telefonoCliente').style.display = 'block';
-                        document.getElementById('emailCliente').style.display = 'block';
-                        document.getElementById('direccionCliente').style.display = 'block';
-                        document.getElementById('rolCliente').style.display = 'block';
-                        document.getElementById('contrasenaCliente').style.display = 'block';
-
-
+                labels.forEach(label => label.style.display = 'block');
+                document.getElementById('nombreCliente').style.display = 'block';
+                document.getElementById('telefonoCliente').style.display = 'block';
+                document.getElementById('emailCliente').style.display = 'block';
+                document.getElementById('direccionCliente').style.display = 'block';
+                document.getElementById('rolCliente').style.display = 'block';
+                document.getElementById('contrasenaCliente').style.display = 'block';
 
                 // Cambiar título y mostrar el campo ID si es necesario
                 switch (action) {
@@ -463,16 +456,15 @@ document.getElementById('actualizar-lista').addEventListener('click', function()
                     case "delete-client":
                         formTitle = "Eliminar Cliente";
                         document.getElementById('client-id-container').style.display = 'block'; // Mostrar campo ID
-                        let labels = Array.from(document.getElementsByTagName('label'));
                         labels.forEach(label => {
-                         if (label.innerHTML === 'ID del Cliente') {
-                         label.style.display = 'block';
-                        } else {
-                      label.style.display = 'none';
-                        }
+                            if (label.innerHTML === 'ID del Cliente') {
+                                label.style.display = 'block';
+                            } else {
+                                label.style.display = 'none';
+                            }
                         });
                         document.getElementById('nombreCliente').style.display = 'none';
-                         document.getElementById('telefonoCliente').style.display = 'none';
+                        document.getElementById('telefonoCliente').style.display = 'none';
                         document.getElementById('emailCliente').style.display = 'none';
                         document.getElementById('direccionCliente').style.display = 'none';
                         document.getElementById('rolCliente').style.display = 'none';
@@ -495,10 +487,7 @@ document.getElementById('actualizar-lista').addEventListener('click', function()
             const rol = document.getElementById('rolCliente').value;
             const contrasena = document.getElementById('contrasenaCliente').value;
 
-            if (!nombre || !telefono || !email || !direccion || !rol || !contrasena) {
-                alert("Por favor, complete todos los campos.");
-                return;
-            }
+          
 
             let url = 'http://127.0.0.1:5000/agregar-usuario';  // Default: Add client
             let method = 'POST';  // Default: POST method

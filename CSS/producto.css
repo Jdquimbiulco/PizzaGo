@@ -105,8 +105,11 @@ header h1 i {
 
 .login-container {
     position: absolute;
-    top: 30px;
+    top: 20px;
     right: 200px;
+}
+a{
+    text-decoration: none;
 }
 
 .login-button {

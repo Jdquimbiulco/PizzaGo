@@ -128,19 +128,19 @@
                 <form id="product-form">
                     <div class="mb-3" id="product-id-container" style="display: none;">
                         <label for="productId" class="form-label">ID del Producto</label>
-                        <input type="text" class="form-control" id="productId" readonly placeholder="ID del Producto">
+                        <input type="text" class="form-control" id="productId"  placeholder="ID del Producto">
                     </div>
                     <div class="mb-3" id="nombre-container">
                         <label for="nombre" class="form-label">Nombre del Producto</label>
-                        <input type="text" id="nombre" class="form-control" placeholder="Nombre del producto" required>
+                        <input type="text" id="nombre" class="form-control" placeholder="Nombre del producto" >
                     </div>
                     <div class="mb-3" id="descripcion-container">
                         <label for="descripcion" class="form-label">Descripción</label>
-                        <input type="text" id="descripcion" class="form-control" placeholder="Descripción del producto" required>
+                        <input type="text" id="descripcion" class="form-control" placeholder="Descripción del producto" >
                     </div>
                     <div class="mb-3" id="tipo-container">
                         <label for="tipo" class="form-label">Tipo</label>
-                        <select id="tipo" class="form-select" required>
+                        <select id="tipo" class="form-select" >
                             <option value="pizza">Pizza</option>
                             <option value="bebida">Bebida</option>
                             <option value="extra">Extra</option>
@@ -148,13 +148,13 @@
                     </div>
                     <div class="mb-3" id="precio-container">
                         <label for="precio" class="form-label">Precio</label>
-                        <input type="number" id="precio" step="0.01" class="form-control" placeholder="Precio del producto" required>
+                        <input type="number" id="precio" step="0.01" class="form-control" placeholder="Precio del producto" >
                     </div>
                     <div class="mb-3" id="imagen-url-container">
                         <label for="imagen_url" class="form-label">Imagen URL</label>
-                        <input type="text" id="imagen_url" class="form-control" placeholder="URL de la imagen del producto" required>
+                        <input type="text" id="imagen_url" class="form-control" placeholder="URL de la imagen del producto" >
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Guardar</button>
+                    <button type="submit" class="btn btn-primary w-100">Completar</button>
                 </form>
             </div>
         </div>
@@ -274,10 +274,7 @@
             const imagen_url = document.getElementById('imagen_url').value;
 
             // Verificar que los campos necesarios no estén vacíos
-            if (!nombre || !descripcion || !tipo || !precio || !imagen_url) {
-                alert("Por favor, complete todos los campos.");
-                return;
-            }
+          
 
             let url = 'http://127.0.0.1:5000/agregar-producto'; // URL por defecto para agregar
             let method = 'POST'; // Método por defecto
