@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
 
-    <title>Detalles del Producto - Pizzería</title>
+    <link rel="icon" type="image/png" href="imgs/pizza-box.png">
     <style>
         /* Estilos generales */
 /* Estilos generales */
@@ -84,7 +84,7 @@ body {
 
 /* Header */
 header {
-    background-color: #c82333; /* Rojo oscuro */
+    background: linear-gradient(90deg, #E65100, #FF6F00);
     color: #fff;
     padding: 15px 20px;
     display: flex;
@@ -333,30 +333,36 @@ footer a:hover {
 .cerrar-sesion:hover {
     background-color: #e6b800; /* Amarillo más oscuro */
 }
+.logo-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
    </style>
 </head>
 <body>
-      <!-- Menú lateral -->
-      <aside class="sidebar">
-       
+    <aside class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">✖</button>
         <ul class="sidebar-menu">
-            <li class="index"><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
-            <li><a href="./carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
-            <li><a href="./pago.html"><i class="fas fa-credit-card"></i> Pago</a></li>
-            </ul>
+            <li class="index"><a href="./index.html"><img src="imgs/spatula.png" width="40px" height="40px"  class="menu-icon"> Productos</a></li>
+            <li><a href="./carrito.html"><img src="imgs/food-stall.png" width="40px" height="40px" class="menu-icon"> Carrito</a></li>
+            <li><a href="./pago.html"><img src="imgs/credit.png" width="40px" height="40px"  class="menu-icon"> Pago</a></li>
+        </ul>
     </aside>
+
     <!-- Botón para abrir el menú -->
     <button class="open-btn" onclick="toggleSidebar()">
-        <i class="fas fa-bars"></i>
+        <img src="imgs/hamburger.png" width="30px" height="30px" alt="Menú" class="hamburger-icon">
     </button>
 
     <header>
         <div>
             <button class="cerrar-sesion" onclick="cerrarSesion()">Cerrar sesión</button>
         </div>
-        <div>
-            <h1><i class="fas fa-shopping-cart"></i>PIZZA GO</h1>
+        <div class="logo-container">
+            <img src="imgs/logo.png" width="50px" height="50px" alt="PizzaGo Logo" class="logo">
+            <h1 class="logo-text">PizzaGo</h1>
         </div>
         <div id="login-container" class="login-container">
             <a href="login.html"><div class="login-button">Iniciar sesión</div></a>
@@ -531,6 +537,9 @@ footer a:hover {
                 alert("No se pudo conectar con el servidor");
             }
         }
+    </script>
+     <script>
+        document.title = "PizzaGo 🍕";
     </script>
 </body>
 </html>

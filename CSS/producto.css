@@ -72,7 +72,8 @@ body {
 
 /* Header */
 header {
-    background-color: #c82333; /* Rojo oscuro */
+    background: linear-gradient(90deg, #E65100, #FF6F00);
+     /* Rojo oscuro */
     color: #fff; /* Texto blanco */
     padding: 20px;
     text-align: center;
@@ -105,7 +106,7 @@ header h1 i {
 
 .login-container {
     position: absolute;
-    top: 20px;
+    top: 27px;
     right: 200px;
 }
 a{
@@ -250,4 +251,9 @@ footer a:hover {
 
 .social-icons a:hover {
     color: #ffcc00; /* Amarillo al pasar el mouse */
+}
+.logo-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

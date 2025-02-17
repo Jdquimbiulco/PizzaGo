@@ -1,36 +1,36 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compra</title>
+    <link rel="icon" type="image/png" href="imgs/pizza-box.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
     <link rel="stylesheet" href="./CSS/estiloCarrito.css">
 </head>
 <body>
-      <!-- Menú lateral -->
-      <aside class="sidebar">
-       
+    <!-- Menú lateral -->
+    <aside class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">✖</button>
         <ul class="sidebar-menu">
-            <li class="index"><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
-            <li><a href="./carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
-            <li><a href="./pago.html"><i class="fas fa-credit-card"></i> Pago</a></li>
-            </ul>
+            <li class="index"><a href="./index.html"><img src="imgs/spatula.png" width="40px" height="40px"  class="menu-icon"> Productos</a></li>
+            <li><a href="./carrito.html"><img src="imgs/food-stall.png" width="40px" height="40px" class="menu-icon"> Carrito</a></li>
+            <li><a href="./pago.html"><img src="imgs/credit.png" width="40px" height="40px"  class="menu-icon"> Pago</a></li>
+        </ul>
     </aside>
-        <!-- Botón para abrir el menú -->
-        <button class="open-btn" onclick="toggleSidebar()">
-            <i class="fas fa-bars"></i>
-        </button>
-        <header>
-            <div>
-                <h1><i class="fas fa-shopping-cart"></i>PIZZA GO</h1>
-            </div>
-            <div id="login-container" class="login-container">
-                <div class="login-button">Iniciar sesión</div>
-            </div>
-            <!-- Carrito de compras -->
-        </header>
+
+    <!-- Botón para abrir el menú -->
+    <button class="open-btn" onclick="toggleSidebar()">
+        <img src="imgs/hamburger.png" width="30px" height="30px" alt="Menú" class="hamburger-icon">
+    </button>
+    <header>
+        <div class="logo-container">
+            <img src="imgs/logo.png" width="50px" height="50px" alt="PizzaGo Logo" class="logo">
+            <h1 class="logo-text">PizzaGo</h1>
+        </div>
+        <div id="login-container" class="login-container">
+            <div class="login-button">Iniciar sesión</div>
+        </div>
+    </header>
 
     <main>
         <section class="cart">
@@ -46,9 +46,9 @@
 
     <footer>
         <div>
-            <span >Términos y condiciones</span>
+            <span>Términos y condiciones</span>
             <span>Política de privacidad</span>
-            <span >Contacto</span>
+            <span>Contacto</span>
         </div>
         <p>&copy; 2023 Tienda Online. Todos los derechos reservados.</p>
         <div class="social-icons">
@@ -57,6 +57,7 @@
             <a href="#"><i class="fab fa-instagram"></i></a>
         </div>
     </footer>
+
     <!-- Modal para seleccionar entrega -->
     <div id="modal" class="modal">
         <div class="modal-content">
@@ -66,18 +67,21 @@
             <button class="btn-close" onclick="cerrarModal()">Cancelar</button>
         </div>
     </div>
-
     <script>
-    function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
-    sidebar.classList.toggle('active');
-    mainContent.classList.toggle('active');
-}
+        document.title = "PizzaGo 🍕";
+    </script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('active');
+        }
+
         window.onload = function() {
             const cliente = JSON.parse(localStorage.getItem('usuario'));
             const loginButton = document.querySelector('.login-button');
-    
+
             if (cliente) {
                 loginButton.innerHTML = `Hola, ${cliente.nombre} <i class="fas fa-user"></i>`;
 
@@ -103,7 +107,7 @@
             const subtotalElement = document.getElementById('subtotal');
             const totalItemsElement = document.getElementById('total-items');
             let cantidadTotal = 0;
-    
+
             cartItemsDiv.innerHTML = '';
 
             productos.forEach(producto => {
@@ -117,20 +121,55 @@
 
                 itemDiv.innerHTML = ` 
                     <p>${nombreProducto}</p>
+                    <div class="cart-item-details">
                     <p>Subtotal: US$${producto.subtotal.toFixed(2)}</p>
+                    <button class="btn-eliminar" onclick="eliminarProducto('${producto.producto_id}')">Eliminar</button>
+                    </div>
                 `;
 
                 cantidadTotal += producto.cantidad;
                 cartItemsDiv.appendChild(itemDiv);
             });
-    
+
             // Actualizar totales
             subtotalElement.textContent = `Subtotal: US$${total.toFixed(2)}`;
             totalItemsElement.textContent = `Cantidad total: ${cantidadTotal}`;
-    
+
             // Mostrar modal cuando se presiona "Proceder al pago"
             document.getElementById('checkout-btn').addEventListener('click', function() {
                 mostrarModal();
+            });
+        }
+
+        function eliminarProducto(productoId) {
+            const cliente = JSON.parse(localStorage.getItem('usuario'));
+            if (!cliente) {
+                alert('No hay cliente autenticado.');
+                return;
+            }
+
+            fetch(`http://127.0.0.1:5000/eliminar-producto-carrito`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    usuario_id: cliente._id,
+                    producto_id: productoId,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Producto eliminado del carrito exitosamente') {
+                    // Recargar el carrito después de eliminar el producto
+                    window.location.reload();
+                } else {
+                    alert('Error al eliminar el producto del carrito.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al eliminar el producto del carrito.');
             });
         }
 
@@ -148,6 +187,5 @@
             window.location.href = "pago.html";
         }
     </script>
-
 </body>
 </html>

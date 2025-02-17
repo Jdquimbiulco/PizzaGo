@@ -581,6 +581,47 @@ def get_pedido(pedidoId):
     except Exception as e:
         # Manejar errores (por ejemplo, ID inválido)
         return jsonify({'error': str(e)}), 400
+    
+@app.route('/eliminar-producto-carrito', methods=['DELETE'])
+def eliminar_producto_carrito():
+    try:
+        # Obtener los datos de la solicitud
+        data = request.get_json()
+        usuario_id = data.get('usuario_id')
+        producto_id = data.get('producto_id')
+
+        # Validar que se proporcionen los campos necesarios
+        if not usuario_id or not producto_id:
+            return jsonify({'message': 'Faltan datos necesarios (usuario_id o producto_id)'}), 400
+
+        # Verificar si el usuario tiene un carrito
+        carrito = carritos_collection.find_one({"usuario_id": ObjectId(usuario_id)})
+        if not carrito:
+            return jsonify({'message': 'Carrito no encontrado para este usuario'}), 404
+
+        # Buscar el producto en el carrito
+        productos_actualizados = [
+            producto for producto in carrito['productos']
+            if producto['producto_id'] != ObjectId(producto_id)
+        ]
+
+        # Si no se encontró el producto, devolver un error
+        if len(productos_actualizados) == len(carrito['productos']):
+            return jsonify({'message': 'Producto no encontrado en el carrito'}), 404
+
+        # Calcular el nuevo total del carrito
+        nuevo_total = sum(producto['subtotal'] for producto in productos_actualizados)
+
+        # Actualizar el carrito en la base de datos
+        carritos_collection.update_one(
+            {"usuario_id": ObjectId(usuario_id)},
+            {"$set": {"productos": productos_actualizados, "total": nuevo_total}}
+        )
+
+        return jsonify({'message': 'Producto eliminado del carrito exitosamente'}), 200
+
+    except Exception as e:
+        return jsonify({'message': f'Error al eliminar el producto del carrito: {str(e)}'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

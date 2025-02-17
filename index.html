@@ -3,31 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda Online</title>
     <link rel="stylesheet" href="CSS/producto.css">
+    <link rel="icon" type="image/png" href="imgs/pizza-box.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
 </head>
 <body>
     <!-- Menú lateral -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">✖</button>
         <ul class="sidebar-menu">
-            <li class="index"><a href="./index.html"><i class="fas fa-pizza-slice"></i> Productos</a></li>
-            <li><a href="./carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
-            <li><a href="./pago.html"><i class="fas fa-credit-card"></i> Pago</a></li>
+            <li class="index"><a href="./index.html"><img src="imgs/spatula.png" width="40px" height="40px"  class="menu-icon"> Productos</a></li>
+            <li><a href="./carrito.html"><img src="imgs/food-stall.png" width="40px" height="40px" class="menu-icon"> Carrito</a></li>
+            <li><a href="./pago.html"><img src="imgs/credit.png" width="40px" height="40px"  class="menu-icon"> Pago</a></li>
         </ul>
     </aside>
 
     <!-- Botón para abrir el menú -->
     <button class="open-btn" onclick="toggleSidebar()">
-        <i class="fas fa-bars"></i>
+        <img src="imgs/hamburger.png" width="40px" height="40px" alt="Menú" class="hamburger-icon">
     </button>
 
     <header>
         <div>
             <button class="cerrar-sesion" onclick="cerrarSesion()">Cerrar sesión</button>
         </div>
-        <div>
-            <h1><i class="fas fa-shopping-cart"></i>PIZZA GO</h1>
+        <div class="logo-container">
+            <img src="imgs/logo.png" width="50px" height="50px" alt="PizzaGo Logo" class="logo">
+            <h1 class="logo-text">PizzaGo</h1>
         </div>
         <div id="login-container" class="login-container">
             <a href="login.html"><div class="login-button">Iniciar sesión</div></a>
@@ -200,10 +202,16 @@
             if (cliente) {
                 document.getElementById('login-container').innerHTML =
                     `<span>Hola, ${cliente.nombre}</span>`;
+            } else {
+                const loginDropdown = document.querySelector('.cerrar-sesion');
+                loginDropdown.style.display = 'none';
             }
 
             cargarProductos();
         };
+    </script>
+    <script>
+        document.title = "PizzaGo 🍕";
     </script>
 </body>
 </html>
