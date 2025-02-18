@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<script>
+    document.title = "PizzaGo 🍕";
+</script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="imgs/pizza-box.png">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<script>
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+function cerrarSesion() {
+            localStorage.removeItem('usuario');
+            location.reload();
+        }
+
+        // Cargar productos al iniciar la página
+        window.onload = function () {
+            const cliente = JSON.parse(localStorage.getItem('usuario'));
+            if (cliente) {
+                document.getElementById('login-container').innerHTML =
+                    `<span>Hola, ${cliente.nombre}</span>`;
+            } else {
+                const loginDropdown = document.querySelector('.cerrar-sesion');
+                loginDropdown.style.display = 'none';
+            }
+
+            cargarProductos();
+        };
+</script>
+
+<body>
+
+ <!-- Header -->
+<header class="header">
+    <!-- Botón Menú Lateral -->
+    <button class="hamburger-btn" onclick="toggleSidebar()">
+        <img src="imgs/hamburger.png" alt="Menú" class="hamburger-icon">
+    </button>
+
+    <!-- Contenedor del Logo -->
+    <div class="logo-container">
+        <img src="imgs/logo.png" alt="PizzaGo Logo" class="logo">
+        <h1 class="logo-text">PizzaGo</h1>
+    </div>
+
+    <!-- Contenedor Derecho -->
+    <div class="header-right">
+        <!-- Ícono del catálogo -->
+        <a href="index.html" class="catalog-icon">
+            <img src="imgs/order-food.png" alt="Catálogo">
+        </a>
+
+        <!-- Botón de Iniciar Sesión -->
+        <div id="login-container" class="login-container">
+            <a href="login.html"><div class="login-button">Iniciar sesión</div></a>
+        </div>
+        <div>
+            <button class="cerrar-sesion" onclick="cerrarSesion()">Cerrar sesión</button>
+        </div>
+    </div>
+</header>
+
+    <!-- Menú lateral deslizante -->
+    <aside class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">✖</button>
+        <ul class="sidebar-menu">
+            <li><a href="./index.html"><img src="imgs/spatula.png" class="menu-icon"> Productos</a></li>
+            <li><a href="./carrito.html"><img src="imgs/food-stall.png" class="menu-icon"> Carrito</a></li>
+            <li><a href="./pago.html"><img src="imgs/credit.png" class="menu-icon"> Pago</a></li>
+        </ul>
+    </aside>
+
+    <!-- Banners -->
+    <section class="banners">
+        <div class="banner">
+            <a href="index.html">
+                <img src="imgs/banner1.png" class="full-width" alt="Banner 1">
+            </a>
+        </div>
+        <div class="banner">
+            <a href="index.html"></a>
+                <img src="imgs/banner2.png" class="full-width" alt="Banner 2">
+            </a>
+        </div>
+        <div class="banner">
+            <a href="index.html"></a>
+                <img src="imgs/banner3.png" class="full-width" alt="Banner 3">
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 PizzaGo. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Script para el menú deslizante -->
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("active");
+        }
+    </script>
+
+</body>
+</html>

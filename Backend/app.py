@@ -1,6 +1,6 @@
 from datetime import datetime
 from email import parser
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 from pymongo import MongoClient
 import pandas as pd
@@ -622,6 +622,14 @@ def eliminar_producto_carrito():
 
     except Exception as e:
         return jsonify({'message': f'Error al eliminar el producto del carrito: {str(e)}'}), 500
+    
+
+
+app = Flask(__name__, template_folder="../")
+
+@app.route("/")
+def home():
+    return render_template("pizzaGo.html")
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
