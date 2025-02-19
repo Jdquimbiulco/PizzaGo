@@ -625,12 +625,6 @@ def eliminar_producto_carrito():
     
 
 
-app = Flask(__name__, template_folder="../")
-
-@app.route("/")
-def home():
-    return render_template("pizzaGo.html")
-
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
 
